@@ -1,0 +1,26 @@
+<div class="step-wrapper">
+  <h2 class="step-title">Datos de Contacto</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="telefono">Teléfono (Celular)</label>
+      <input id="telefono" type="tel" formControlName="telefono" autocomplete="off" placeholder="Ej: 1122334455">
+      @if (form.controls.telefono.invalid && form.controls.telefono.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Ingrese un teléfono válido</span>
+      }
+    </div>
+
+    <div class="form-group" style="margin-top: 2rem;">
+      <label for="fechaNacimiento">Fecha de Nacimiento</label>
+      <!-- Usamos type="date" para aprovechar el selector nativo del SO en caso de tactil -->
+      <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento">
+      @if (form.controls.fechaNacimiento.invalid && form.controls.fechaNacimiento.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Seleccione su fecha de nacimiento</span>
+      }
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-secondary" (click)="onPrevious()">Atrás</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">Siguiente</button>
+    </div>
+  </form>
+</div>

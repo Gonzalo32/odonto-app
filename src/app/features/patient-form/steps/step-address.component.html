@@ -1,0 +1,25 @@
+<div class="step-wrapper">
+  <h2 class="step-title">Domicilio</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="localidad">Localidad</label>
+      <input id="localidad" type="text" formControlName="localidad" autocomplete="off" placeholder="Ej: CABA, Rosario">
+      @if (form.controls.localidad.invalid && form.controls.localidad.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Ingrese su localidad</span>
+      }
+    </div>
+
+    <div class="form-group" style="margin-top: 2rem;">
+      <label for="domicilio">Domicilio (Calle y Número)</label>
+      <input id="domicilio" type="text" formControlName="domicilio" autocomplete="off" placeholder="Ej: Av. San Martín 1234">
+      @if (form.controls.domicilio.invalid && form.controls.domicilio.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Ingrese su domicilio</span>
+      }
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-secondary" (click)="onPrevious()">Atrás</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">Finalizar</button>
+    </div>
+  </form>
+</div>

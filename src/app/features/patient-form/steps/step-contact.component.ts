@@ -1,0 +1,35 @@
+import { Component, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { PatientFormService } from '../../../core/services/patient-form.service';
+
+@Component({
+  selector: 'app-step-contact',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './step-contact.component.html',
+  styleUrls: ['./step-contact.component.scss']
+})
+export class StepContactComponent {
+  private fb = inject(FormBuilder);
+  patientFormService = inject(PatientFormService);
+
+  form = this.fb.group({
+    telefono: [this.patientFormService.formData().telefono || '', [Validators.required, Validators.pattern('^[0-9]*$')]],
+    fechaNacimiento: [this.patientFormService.formData().fechaNacimiento || '', [Validators.required]]
+  });
+
+  onPrevious() {
+    this.patientFormService.previousStep();
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      this.patientFormService.updateData({
+        telefono: this.form.value.telefono!,
+        fechaNacimiento: this.form.value.fechaNacimiento!
+      });
+      this.patientFormService.nextStep();
+    }
+  }
+}

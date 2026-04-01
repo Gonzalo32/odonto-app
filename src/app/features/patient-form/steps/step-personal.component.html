@@ -1,0 +1,25 @@
+<div class="step-wrapper">
+  <h2 class="step-title">Datos Personales</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" type="text" formControlName="nombre" autocomplete="off" placeholder="Ej: Juan">
+      @if (form.controls.nombre.invalid && form.controls.nombre.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Ingrese su nombre</span>
+      }
+    </div>
+
+    <div class="form-group" style="margin-top: 2rem;">
+      <label for="apellido">Apellido</label>
+      <input id="apellido" type="text" formControlName="apellido" autocomplete="off" placeholder="Ej: Pérez">
+      @if (form.controls.apellido.invalid && form.controls.apellido.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Ingrese su apellido</span>
+      }
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-secondary" (click)="onPrevious()">Atrás</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">Siguiente</button>
+    </div>
+  </form>
+</div>

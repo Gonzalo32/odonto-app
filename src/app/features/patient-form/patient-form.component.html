@@ -1,0 +1,25 @@
+<div class="totem-form-container">
+  <div class="progress-bar-wrapper">
+    <div class="progress-indicator" [style.width.%]="(patientFormService.currentStep() / patientFormService.totalSteps()) * 100"></div>
+  </div>
+  
+  <div class="step-container">
+    @switch (patientFormService.currentStep()) {
+      @case (1) {
+        <app-step-dni></app-step-dni>
+      }
+      @case (2) {
+        <app-step-personal></app-step-personal>
+      }
+      @case (3) {
+        <app-step-contact></app-step-contact>
+      }
+      @case (4) {
+        <app-step-insurance></app-step-insurance>
+      }
+      @case (5) {
+        <app-step-address></app-step-address>
+      }
+    }
+  </div>
+</div>

@@ -1,0 +1,30 @@
+.totem-form-container {
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-bar-wrapper {
+  width: 100%;
+  max-width: 800px;
+  height: 8px;
+  background-color: var(--border-color);
+  border-radius: 4px;
+  margin-bottom: var(--spacing-lg);
+  overflow: hidden;
+}
+
+.progress-indicator {
+  height: 100%;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease-in-out;
+}
+
+.step-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

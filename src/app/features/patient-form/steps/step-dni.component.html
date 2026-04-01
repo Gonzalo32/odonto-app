@@ -1,0 +1,23 @@
+<div class="step-wrapper">
+  <h2 class="step-title">Bienvenido!</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="dni">Por favor, ingrese su DNI</label>
+      <input 
+        id="dni" 
+        type="tel" 
+        formControlName="dni" 
+        placeholder="Ej: 12345678" 
+        maxlength="8"
+        autocomplete="off"
+      >
+      @if (form.controls.dni.invalid && form.controls.dni.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Ingrese un DNI válido (sólo números)</span>
+      }
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">Siguiente</button>
+    </div>
+  </form>
+</div>

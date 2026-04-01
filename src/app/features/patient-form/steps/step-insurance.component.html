@@ -1,0 +1,25 @@
+<div class="step-wrapper">
+  <h2 class="step-title">Cobertura Médica</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="obraSocial">Obra Social / Prepaga</label>
+      <input id="obraSocial" type="text" formControlName="obraSocial" autocomplete="off" placeholder="Ej: OSDE, Swiss Medical">
+      @if (form.controls.obraSocial.invalid && form.controls.obraSocial.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Ingrese su obra social</span>
+      }
+    </div>
+
+    <div class="form-group" style="margin-top: 2rem;">
+      <label for="numeroAfiliado">Número de Afiliado</label>
+      <input id="numeroAfiliado" type="text" formControlName="numeroAfiliado" autocomplete="off" placeholder="Ej: 123456789">
+      @if (form.controls.numeroAfiliado.invalid && form.controls.numeroAfiliado.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Ingrese su número de afiliado</span>
+      }
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-secondary" (click)="onPrevious()">Atrás</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">Siguiente</button>
+    </div>
+  </form>
+</div>
