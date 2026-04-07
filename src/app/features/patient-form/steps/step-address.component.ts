@@ -29,12 +29,7 @@ export class StepAddressComponent {
         localidad: this.form.value.localidad!,
         domicilio: this.form.value.domicilio!
       });
-      // Aquí se enviaría el form final a la API, mock por ahora:
-      console.log('Paciente final a guardar:', this.patientFormService.formData());
-      
-      // Reseteo exitoso (para el próximo paciente)
-      alert("Paciente registrado con éxito");
-      this.patientFormService.reset();
+      this.patientFormService.nextStep();
     }
   }
 }

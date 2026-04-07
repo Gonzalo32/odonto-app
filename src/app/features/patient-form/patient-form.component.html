@@ -1,4 +1,17 @@
 <div class="totem-form-container">
+  <!-- Botón Volver (Esquina superior izquierda) -->
+  <button 
+    *ngIf="patientFormService.currentStep() > 1" 
+    class="btn-back-floating" 
+    (click)="patientFormService.previousStep()"
+    aria-label="Volver atrás"
+  >
+    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+  </button>
+
   <div class="progress-bar-wrapper">
     <div class="progress-indicator" [style.width.%]="(patientFormService.currentStep() / patientFormService.totalSteps()) * 100"></div>
   </div>
@@ -19,6 +32,9 @@
       }
       @case (5) {
         <app-step-address></app-step-address>
+      }
+      @case (6) {
+        <app-step-review></app-step-review>
       }
     }
   </div>
