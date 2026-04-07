@@ -20,8 +20,18 @@ export class StepDniComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      this.patientFormService.updateData({ dni: this.form.value.dni! });
-      this.patientFormService.nextStep();
+      const dni = this.form.value.dni!;
+      this.patientFormService.updateData({ dni });
+      
+      const exists = this.patientFormService.lookupPatientByDni(dni);
+      
+      if (exists) {
+        // Si ya existe, saltamos directamente al resumen (paso 6)
+        this.patientFormService.currentStep.set(6);
+      } else {
+        // Si no existe, seguimos el flujo normal
+        this.patientFormService.nextStep();
+      }
     }
   }
 }

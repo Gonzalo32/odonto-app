@@ -34,7 +34,7 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
           </div>
           <div class="summary-item">
             <span class="label">Fecha Nac.:</span>
-            <span class="value">{{ patientFormService.formData().fechaNacimiento }}</span>
+            <span class="value">{{ formatDate(patientFormService.formData().fechaNacimiento) }}</span>
           </div>
         </div>
 
@@ -42,9 +42,10 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
           <span class="label">Obra Social:</span>
           <span class="value">
             {{ patientFormService.formData().obraSocial || 'Particular' }}
-            <span *ngIf="patientFormService.formData().numeroAfiliado">
-              (Afiliado: {{ patientFormService.formData().numeroAfiliado }})
-            </span>
+            <ng-container *ngIf="patientFormService.formData().numeroAfiliado">
+              <br>
+              <span class="affiliate-label">Afiliado: {{ patientFormService.formData().numeroAfiliado }}:</span>
+            </ng-container>
           </span>
         </div>
 
@@ -99,6 +100,17 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
       font-size: 1.8rem;
       color: var(--text-color);
       font-weight: 600;
+      line-height: 1.2;
+    }
+    .affiliate-label {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      font-weight: 500;
+      background: rgba(var(--primary-color-rgb, 0, 86, 179), 0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-top: 0.4rem;
     }
     .actions {
       display: flex;
@@ -117,5 +129,15 @@ export class StepReviewComponent {
 
   onConfirm() {
     this.patientFormService.saveAndPrint();
+  }
+
+  formatDate(dateStr?: string): string {
+    if (!dateStr) return 'No proporcionada';
+    // Asumimos formato YYYY-MM-DD del input date
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+    return dateStr;
   }
 }
