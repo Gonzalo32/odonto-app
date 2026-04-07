@@ -38,15 +38,15 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
           </div>
         </div>
 
-        <div class="summary-item">
-          <span class="label">Obra Social:</span>
-          <span class="value">
-            {{ patientFormService.formData().obraSocial || 'Particular' }}
-            <ng-container *ngIf="patientFormService.formData().numeroAfiliado">
-              <br>
-              <span class="affiliate-label">Afiliado: {{ patientFormService.formData().numeroAfiliado }}:</span>
-            </ng-container>
-          </span>
+        <div class="summary-row">
+          <div class="summary-item">
+            <span class="label">Obra Social:</span>
+            <span class="value">{{ patientFormService.formData().obraSocial || 'Particular' }}</span>
+          </div>
+          <div class="summary-item" *ngIf="patientFormService.formData().numeroAfiliado">
+            <span class="label">Afiliado:</span>
+            <span class="value">{{ patientFormService.formData().numeroAfiliado }}</span>
+          </div>
         </div>
 
         <div class="summary-item">
@@ -101,16 +101,6 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
       color: var(--text-color);
       font-weight: 600;
       line-height: 1.2;
-    }
-    .affiliate-label {
-      font-size: 1.2rem;
-      color: var(--primary-color);
-      font-weight: 500;
-      background: rgba(var(--primary-color-rgb, 0, 86, 179), 0.1);
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      display: inline-block;
-      margin-top: 0.4rem;
     }
     .actions {
       display: flex;
