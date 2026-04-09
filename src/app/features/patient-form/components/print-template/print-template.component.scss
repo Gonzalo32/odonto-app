@@ -6,82 +6,105 @@
 
 @media print {
   @page {
-    size: A6 portrait;
-    margin: 5mm; /* Pequeño margen para evitar cortes */
+    size: 13.1cm 18.9cm; /* Invertido para que el navegador lo vea como Portrait */
+    margin: 0;
   }
 
   :host {
     display: block !important;
-    width: 95mm; /* Ajustado al área de impresión de A6 */
-    height: 138mm;
-    position: relative;
-    font-family: 'Inter', sans-serif;
+    width: 18.9cm;  /* Ancho original */
+    height: 13.1cm; /* Alto original */
+    position: absolute;
+    
+    /* Rotación de 90 grados a la izquierda */
+    transform: rotate(-90deg);
+    transform-origin: top left;
+    top: 18.9cm; /* Desplazamos hacia abajo después de rotar */
+    left: 0;
+    
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11pt;
     color: #000;
     page-break-after: avoid;
     break-after: avoid;
   }
 
   .print-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    width: 100%;
     height: 100%;
-    width: 100%;
+    position: relative;
   }
 
-  .section {
-    width: 100%;
+  .field {
+    position: absolute;
+    white-space: nowrap;
   }
 
-  .p-label {
-    font-size: 8pt;
+  /* Fila 1 (Original) */
+  .name-field {
+    top: 1.6cm;
+    left: 6.2cm;
     font-weight: bold;
-    color: #444;
-    display: block;
-    margin-bottom: 2pt;
+    font-size: 12pt;
   }
 
-  .p-value {
-    font-size: 11pt;
-    margin-bottom: 8pt;
-    &.big { font-size: 14pt; font-weight: bold; }
-    &.highlight { font-size: 13pt; font-weight: bold; border-bottom: 1px solid #000; }
-  }
-
-  .field-row {
+  .afiliado-container {
+    position: absolute;
+    top: 1.6cm;
+    left: 12.2cm;
     display: flex;
-    gap: 15pt;
-  }
+    gap: 0;
 
-  .afiliado-row {
-    display: flex;
-    margin-bottom: 8pt;
     .digit {
-      width: 6mm;
-      height: 7mm;
-      border: 1px solid #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11pt;
-      margin-right: -1px; /* Colapsar bordes */
+      width: 0.435cm;
+      text-align: center;
+      display: inline-block;
     }
   }
 
-  .top {
-    border-bottom: 1.5pt solid #000;
-    padding-bottom: 5pt;
+  /* Fila 2 (Original) */
+  .domicilio-field {
+    top: 2.35cm;
+    left: 2.5cm;
   }
 
-  .bottom {
-    border-top: 1.5pt solid #000;
-    padding-top: 10pt;
-    text-align: right;
+  .localidad-field {
+    top: 2.35cm;
+    left: 11.2cm;
   }
 
-  .dni-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+  .tel-field {
+    top: 2.35cm;
+    left: 16.2cm;
+  }
+
+  /* Fila 3 (Original) */
+  .dni-field {
+    top: 3.1cm;
+    left: 2.2cm;
+  }
+
+  .fecha-nac-container {
+    position: absolute;
+    top: 3.1cm;
+    left: 7.7cm;
+    
+    span {
+      position: absolute;
+      text-align: center;
+    }
+    .day   { left: 0; width: 0.8cm; }
+    .month { left: 1.1cm; width: 0.8cm; }
+    .year  { left: 2.2cm; width: 0.8cm; }
+  }
+
+  .edad-field {
+    top: 3.1cm;
+    left: 12.8cm;
+  }
+
+  .obra-social-field {
+    top: 3.1cm;
+    left: 15.5cm;
   }
 }

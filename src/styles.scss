@@ -117,25 +117,32 @@ input {
 
 /* Estilos para impresión */
 @media print {
-  /* Forzamos que nada se muestre excepto el template */
-  body > *:not(app-print-template) {
+  /* No ocultamos el body ni el app-root para permitir que los hijos se vean */
+  body {
+    visibility: visible !important;
+    overflow: visible !important;
+  }
+
+  /* Ocultamos explícitamente el contenedor de la interfaz del tótem */
+  .no-print, 
+  .no-print * {
     display: none !important;
   }
 
-  html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    height: 13.1cm !important;
-    width: 18.9cm !important;
-    overflow: hidden !important;
-  }
-
+  /* Aseguramos que el template de impresión sea lo único visible y ocupe su lugar */
   app-print-template {
     display: block !important;
+    visibility: visible !important;
     position: absolute;
     left: 0;
     top: 0;
-    width: 18.9cm;
-    height: 13.1cm;
+    width: 105mm; /* Ancho A6 */
+    height: 148mm; /* Alto A6 */
+  }
+
+  /* Forzamos el tamaño de la página */
+  @page {
+    size: A6 portrait;
+    margin: 0;
   }
 }
