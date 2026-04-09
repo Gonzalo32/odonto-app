@@ -114,3 +114,28 @@ input {
     flex: 1;
   }
 }
+
+/* Estilos para impresión */
+@media print {
+  /* Forzamos que nada se muestre excepto el template */
+  body > *:not(app-print-template) {
+    display: none !important;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 13.1cm !important;
+    width: 18.9cm !important;
+    overflow: hidden !important;
+  }
+
+  app-print-template {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18.9cm;
+    height: 13.1cm;
+  }
+}

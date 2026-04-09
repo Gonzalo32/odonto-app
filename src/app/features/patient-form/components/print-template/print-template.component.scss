@@ -1,0 +1,87 @@
+@media screen {
+  :host {
+    display: none !important;
+  }
+}
+
+@media print {
+  @page {
+    size: A6 portrait;
+    margin: 5mm; /* Pequeño margen para evitar cortes */
+  }
+
+  :host {
+    display: block !important;
+    width: 95mm; /* Ajustado al área de impresión de A6 */
+    height: 138mm;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+    color: #000;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  .print-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+  }
+
+  .section {
+    width: 100%;
+  }
+
+  .p-label {
+    font-size: 8pt;
+    font-weight: bold;
+    color: #444;
+    display: block;
+    margin-bottom: 2pt;
+  }
+
+  .p-value {
+    font-size: 11pt;
+    margin-bottom: 8pt;
+    &.big { font-size: 14pt; font-weight: bold; }
+    &.highlight { font-size: 13pt; font-weight: bold; border-bottom: 1px solid #000; }
+  }
+
+  .field-row {
+    display: flex;
+    gap: 15pt;
+  }
+
+  .afiliado-row {
+    display: flex;
+    margin-bottom: 8pt;
+    .digit {
+      width: 6mm;
+      height: 7mm;
+      border: 1px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11pt;
+      margin-right: -1px; /* Colapsar bordes */
+    }
+  }
+
+  .top {
+    border-bottom: 1.5pt solid #000;
+    padding-bottom: 5pt;
+  }
+
+  .bottom {
+    border-top: 1.5pt solid #000;
+    padding-top: 10pt;
+    text-align: right;
+  }
+
+  .dni-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}

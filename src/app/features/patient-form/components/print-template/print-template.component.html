@@ -1,0 +1,58 @@
+<div class="print-container">
+  <!-- Superior -->
+  <div class="section top">
+    <div class="field label-value">
+      <span class="p-label">TELÉFONO:</span>
+      <span class="p-value highlight">{{ patient().telefono }}</span>
+    </div>
+  </div>
+
+  <!-- Contenido Medio -->
+  <div class="section middle">
+    <div class="field">
+      <span class="p-label">PACIENTE:</span>
+      <div class="p-value big">{{ fullName() }}</div>
+    </div>
+
+    <div class="field">
+      <span class="p-label">OBRA SOCIAL:</span>
+      <div class="p-value">{{ patient().obraSocial }}</div>
+    </div>
+
+    <div class="field">
+      <span class="p-label">AFILIADO:</span>
+      <div class="afiliado-row">
+        <span class="digit" *ngFor="let d of afiliadoDigits()">{{ d }}</span>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <span class="p-label">FECHA NAC:</span>
+        <div class="p-value">{{ formattedBirthDate().d }}/{{ formattedBirthDate().m }}/{{ formattedBirthDate().a }}</div>
+      </div>
+      <div class="field">
+        <span class="p-label">EDAD:</span>
+        <div class="p-value">{{ age() }} años</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="p-label">LOCALIDAD:</span>
+      <div class="p-value">{{ patient().localidad }}</div>
+    </div>
+
+    <div class="field">
+      <span class="p-label">DOMICILIO:</span>
+      <div class="p-value">{{ patient().domicilio }}</div>
+    </div>
+  </div>
+
+  <!-- Inferior -->
+  <div class="section bottom">
+    <div class="field dni-footer">
+      <span class="p-label">D.N.I. N°:</span>
+      <span class="p-value highlight">{{ patient().dni }}</span>
+    </div>
+  </div>
+</div>

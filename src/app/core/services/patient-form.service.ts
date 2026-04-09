@@ -78,8 +78,11 @@ export class PatientFormService {
     // TODO: El ID debería ser gestionado por MongoDB (_id).
     // TODO: Diseñar la planilla de impresión física y mapear los campos posicionales.
     
-    alert('Datos guardados correctamente. Iniciando impresión...');
-    this.reset();
+    // Iniciamos la impresión
+    setTimeout(() => {
+      window.print();
+      this.reset();
+    }, 500);
   }
 
   // Actualización de datos
