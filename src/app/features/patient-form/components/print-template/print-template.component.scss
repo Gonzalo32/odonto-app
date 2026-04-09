@@ -1,110 +1,94 @@
-@media screen {
-  :host {
-    display: none !important;
+/* Estilo para que no se vea en pantalla, pero sea "capturable" por html2canvas */
+:host {
+  position: fixed;
+  left: -200vw; /* Fuera de la pantalla */
+  top: 0;
+  display: block;
+  width: 18.9cm;
+  height: 13.1cm;
+  background-color: white;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11pt;
+  color: #000;
+  z-index: -1000;
+}
+
+.print-container {
+  width: 18.9cm;
+  height: 13.1cm;
+  position: relative;
+  background-color: white;
+}
+
+.field {
+  position: absolute;
+  white-space: nowrap;
+}
+
+/* Fila 1 */
+.name-field {
+  top: 1.6cm;
+  left: 6.2cm;
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+.afiliado-container {
+  position: absolute;
+  top: 1.6cm;
+  left: 12.2cm;
+  display: flex;
+  gap: 0;
+
+  .digit {
+    width: 0.435cm;
+    text-align: center;
+    display: inline-block;
   }
 }
 
-@media print {
-  @page {
-    size: 13.1cm 18.9cm; /* Invertido para que el navegador lo vea como Portrait */
-    margin: 0;
-  }
+/* Fila 2 */
+.domicilio-field {
+  top: 2.35cm;
+  left: 2.5cm;
+}
 
-  :host {
-    display: block !important;
-    width: 18.9cm;  /* Ancho original */
-    height: 13.1cm; /* Alto original */
+.localidad-field {
+  top: 2.35cm;
+  left: 11.2cm;
+}
+
+.tel-field {
+  top: 2.35cm;
+  left: 16.2cm;
+}
+
+/* Fila 3 */
+.dni-field {
+  top: 3.1cm;
+  left: 2.2cm;
+}
+
+.fecha-nac-container {
+  position: absolute;
+  top: 3.1cm;
+  left: 7.7cm;
+  
+  span {
     position: absolute;
-    
-    /* Rotación de 90 grados a la izquierda */
-    transform: rotate(-90deg);
-    transform-origin: top left;
-    top: 18.9cm; /* Desplazamos hacia abajo después de rotar */
-    left: 0;
-    
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 11pt;
-    color: #000;
-    page-break-after: avoid;
-    break-after: avoid;
+    text-align: center;
   }
+  .day   { left: 0; width: 0.8cm; }
+  .month { left: 1.1cm; width: 0.8cm; }
+  .year  { left: 2.2cm; width: 0.8cm; }
+}
 
-  .print-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
+.edad-field {
+  top: 3.1cm;
+  left: 12.8cm;
+}
 
-  .field {
-    position: absolute;
-    white-space: nowrap;
-  }
-
-  /* Fila 1 (Original) */
-  .name-field {
-    top: 1.6cm;
-    left: 6.2cm;
-    font-weight: bold;
-    font-size: 12pt;
-  }
-
-  .afiliado-container {
-    position: absolute;
-    top: 1.6cm;
-    left: 12.2cm;
-    display: flex;
-    gap: 0;
-
-    .digit {
-      width: 0.435cm;
-      text-align: center;
-      display: inline-block;
-    }
-  }
-
-  /* Fila 2 (Original) */
-  .domicilio-field {
-    top: 2.35cm;
-    left: 2.5cm;
-  }
-
-  .localidad-field {
-    top: 2.35cm;
-    left: 11.2cm;
-  }
-
-  .tel-field {
-    top: 2.35cm;
-    left: 16.2cm;
-  }
-
-  /* Fila 3 (Original) */
-  .dni-field {
-    top: 3.1cm;
-    left: 2.2cm;
-  }
-
-  .fecha-nac-container {
-    position: absolute;
-    top: 3.1cm;
-    left: 7.7cm;
-    
-    span {
-      position: absolute;
-      text-align: center;
-    }
-    .day   { left: 0; width: 0.8cm; }
-    .month { left: 1.1cm; width: 0.8cm; }
-    .year  { left: 2.2cm; width: 0.8cm; }
-  }
-
-  .edad-field {
-    top: 3.1cm;
-    left: 12.8cm;
-  }
-
-  .obra-social-field {
-    top: 3.1cm;
-    left: 15.5cm;
-  }
+.obra-social-field {
+  top: 3.1cm;
+  left: 15.5cm;
 }

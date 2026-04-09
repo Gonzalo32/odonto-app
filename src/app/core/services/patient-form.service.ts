@@ -9,6 +9,9 @@ export class PatientFormService {
   // Datos acumulados del formulario
   formData = signal<Partial<Patient>>({});
   
+  // Señal para disparar la generación de PDF
+  triggerPrint = signal<number>(0);
+  
   // Valores derivados
   totalSteps = computed(() => 6);
   isLastStep = computed(() => this.currentStep() === this.totalSteps());
@@ -74,15 +77,8 @@ export class PatientFormService {
 
     localStorage.setItem('patients_db', JSON.stringify(currentPatients));
 
-    // TODO: Implementar la conexión real con el backend Node.js + MongoDB.
-    // TODO: El ID debería ser gestionado por MongoDB (_id).
-    // TODO: Diseñar la planilla de impresión física y mapear los campos posicionales.
-    
-    // Iniciamos la impresión
-    setTimeout(() => {
-      window.print();
-      this.reset();
-    }, 500);
+    // Disparamos la señal para que el componente genere el PDF
+    this.triggerPrint.update(v => v + 1);
   }
 
   // Actualización de datos

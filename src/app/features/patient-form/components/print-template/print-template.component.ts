@@ -1,6 +1,8 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PatientFormService } from '../../../../core/services/patient-form.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-print-template',
@@ -13,6 +15,45 @@ export class PrintTemplateComponent {
   patientFormService = inject(PatientFormService);
   
   patient = computed(() => this.patientFormService.formData());
+
+  constructor() {
+    // Escuchar el disparo de impresión desde el servicio
+    effect(() => {
+      const trigger = this.patientFormService.triggerPrint();
+      if (trigger > 0) {
+        this.generatePDF();
+      }
+    });
+  }
+
+  async generatePDF() {
+    const data = document.getElementById('print-data');
+    if (!data) return;
+
+    // Aumentamos el factor de escala para mejor calidad en texto pequeño
+    const canvas = await html2canvas(data, {
+      scale: 3,
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#ffffff'
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    
+    // Crear PDF: 'l' (landscape), 'cm' (centímetros), [ancho, alto]
+    const pdf = new jsPDF('l', 'cm', [18.9, 13.1]);
+    
+    // Añadimos la imagen ajustada al tamaño total
+    pdf.addImage(imgData, 'PNG', 0, 0, 18.9, 13.1);
+
+    // Abrir en nueva pestaña para previsualización
+    const blob = pdf.output('blob');
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+
+    // Reseteamos el formulario después de generar el PDF
+    this.patientFormService.reset();
+  }
 
   // Formateo de Nombre Completo: APELLIDO, Nombre
   fullName = computed(() => {
