@@ -1,13 +1,18 @@
 :root {
-  // Colors
-  --primary-color: #0056b3;
-  --primary-light: #4dabf5;
-  --secondary-color: #f8f9fa;
+  // SENZA Brand Colors
+  --primary-color: #7d336a;   /* Púrpura Senza */
+  --primary-dark: #4e1e3b;    /* Púrpura Acento */
+  --primary-light: #e7d2e9;   /* Lavanda Suave */
+  --secondary-color: #9d4d8a; /* Púrpura Medio */
+  --bg-color: #f5eef7;        /* Fondo claro lavanda */
   --text-color: #333333;
   --text-light: #6c757d;
   --error-color: #dc3545;
   --border-color: #dee2e6;
-  --bg-color: #ffffff;
+  
+  // SENZA Typography
+  --font-family-title: 'Cinzel', serif;
+  --font-family-body: 'Montserrat', sans-serif;
   
   // Font sizes for Touch Interface (Totem)
   --font-size-base: 1.5rem;
