@@ -9,7 +9,7 @@
       }
     </div>
 
-    <div class="form-group" style="margin-top: 2rem;">
+    <div class="form-group" style="margin-top: var(--spacing-md);">
       <label for="numeroAfiliado">Número de Afiliado</label>
       <input id="numeroAfiliado" type="text" formControlName="numeroAfiliado" autocomplete="off" placeholder="Ej: 123456789">
       @if (form.controls.numeroAfiliado.invalid && form.controls.numeroAfiliado.touched) {

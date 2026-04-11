@@ -1,17 +1,18 @@
 .totem-form-container {
   width: 100vw;
-  min-height: 100vh; /* Permite que el contenedor crezca si el contenido es largo */
+  height: 100vh; /* Fijo al viewport */
+  overflow: hidden; /* No scroll en el contenedor principal */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   position: relative;
   background: radial-gradient(circle at 10% 10%, var(--primary-light) 0%, var(--bg-color) 40%);
-  padding: var(--spacing-lg) 2rem;
+  padding: var(--spacing-sm) 1rem;
 }
 
 .brand-header {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
   text-align: center;
   animation: fadeInDown 0.8s ease-out;
 }
@@ -24,7 +25,7 @@
   
   .logo-main {
     font-family: var(--font-family-title);
-    font-size: clamp(3rem, 10vw, 6rem); /* Escala fluidamente con el ancho */
+    font-size: clamp(2rem, 8vh, 4rem); /* Escala agresivamente con el alto para no empujar botones */
     line-height: 1;
     letter-spacing: 0.15em;
     font-weight: 700;
@@ -43,10 +44,10 @@
 .progress-bar-wrapper {
   width: 100%;
   max-width: 800px;
-  height: 10px;
+  height: 8px;
   background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 5px;
-  margin-bottom: var(--spacing-lg);
+  border-radius: 4px;
+  margin-bottom: var(--spacing-sm);
   overflow: hidden;
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
@@ -60,10 +61,13 @@
 .step-container {
   width: 100%;
   max-width: 1200px;
+  flex: 1; /* Ocupa el espacio restante */
   display: flex;
   justify-content: center;
+  align-items: center; /* Centra el contenido verticalmente si hay espacio */
   padding: 0 2rem;
   animation: fadeInUp 0.5s ease-out;
+  overflow: hidden; /* Los pasos individuales controlarán su desbordamiento si es necesario */
 }
 
 @keyframes fadeInDown {
