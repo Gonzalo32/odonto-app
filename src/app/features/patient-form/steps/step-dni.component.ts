@@ -18,18 +18,19 @@ export class StepDniComponent {
     dni: [this.patientFormService.formData().dni || '', [Validators.required, Validators.minLength(7), Validators.maxLength(8), Validators.pattern('^[0-9]*$')]]
   });
 
-  onSubmit() {
+  async onSubmit() {
     if (this.form.valid) {
       const dni = this.form.value.dni!;
       this.patientFormService.updateData({ dni });
       
-      const exists = this.patientFormService.lookupPatientByDni(dni);
+      // Buscamos si existe para cargar los datos
+      const exists = await this.patientFormService.lookupPatientByDni(dni);
       
-      if (exists) {
-        // Si ya existe, saltamos directamente al resumen (paso 6)
+      if (exists && !this.patientFormService.isEditing()) {
+        // Si existe y NO estamos modificando desde el botón "Modificar", saltamos al resumen
         this.patientFormService.currentStep.set(6);
       } else {
-        // Si no existe, seguimos el flujo normal
+        // Si no existe o estamos en flujo de modificación, vamos paso a paso
         this.patientFormService.nextStep();
       }
     }

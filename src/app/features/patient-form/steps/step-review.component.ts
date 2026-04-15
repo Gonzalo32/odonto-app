@@ -57,8 +57,8 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
       </div>
 
       <div class="actions">
-        <button type="button" class="btn-secondary" (click)="onPrevious()">Atrás</button>
-        <button type="button" class="btn-primary" (click)="onConfirm()">Imprimir</button>
+        <button type="button" class="btn-secondary" (click)="onModificar()">Modificar</button>
+        <button type="button" class="btn-primary" (click)="onConfirm()">Aceptar</button>
       </div>
     </div>
   `,
@@ -111,8 +111,9 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
 export class StepReviewComponent {
   patientFormService = inject(PatientFormService);
 
-  onPrevious() {
-    this.patientFormService.previousStep();
+  onModificar() {
+    this.patientFormService.isEditing.set(true);
+    this.patientFormService.currentStep.set(1);
   }
 
   onConfirm() {
@@ -120,12 +121,6 @@ export class StepReviewComponent {
   }
 
   formatDate(dateStr?: string): string {
-    if (!dateStr) return 'No proporcionada';
-    // Asumimos formato YYYY-MM-DD del input date
-    const parts = dateStr.split('-');
-    if (parts.length === 3) {
-      return `${parts[2]}/${parts[1]}/${parts[0]}`;
-    }
-    return dateStr;
+    return this.patientFormService.toDdMmAaaa(dateStr) || 'No proporcionada';
   }
 }

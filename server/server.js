@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -19,7 +20,7 @@ mongoose.connect(MONGODB_URI)
 // Models
 const Patient = require('./models/Patient');
 
-// Routes
+// API Routes
 app.post('/api/patients', async (req, res) => {
   try {
     const patientData = req.body;
@@ -46,6 +47,16 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected' });
 });
 
+// Front-end Unificado: Servir archivos estáticos de Angular
+const angularBuildPath = path.join(__dirname, '../dist/totem-app/browser');
+app.use(express.static(angularBuildPath));
+
+// Catch-all route para que el routing de Angular funcione (debe ir al final)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(angularBuildPath, 'index.html'));
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`Frontend unified at http://localhost:${PORT}`);
 });

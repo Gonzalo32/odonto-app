@@ -16,7 +16,7 @@ export class StepInsuranceComponent {
 
   form = this.fb.group({
     obraSocial: [this.patientFormService.formData().obraSocial || '', [Validators.required]],
-    numeroAfiliado: [this.patientFormService.formData().numeroAfiliado || '', [Validators.required]]
+    numeroAfiliado: [this.patientFormService.formData().numeroAfiliado || '']
   });
 
   onPrevious() {
@@ -27,7 +27,7 @@ export class StepInsuranceComponent {
     if (this.form.valid) {
       this.patientFormService.updateData({
         obraSocial: this.form.value.obraSocial!,
-        numeroAfiliado: this.form.value.numeroAfiliado!
+        numeroAfiliado: this.form.value.numeroAfiliado || ''
       });
       this.patientFormService.nextStep();
     }
