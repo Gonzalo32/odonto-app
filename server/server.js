@@ -24,12 +24,23 @@ const Patient = require('./models/Patient');
 app.post('/api/patients', async (req, res) => {
   try {
     const patientData = req.body;
-    const newPatient = new Patient(patientData);
-    await newPatient.save();
-    console.log('Patient saved:', newPatient.dni);
-    res.status(201).json({ message: 'Patient saved successfully', data: newPatient });
+
+    if (!patientData.dni) {
+      return res.status(400).json({ error: 'DNI es requerido' });
+    }
+
+    // UPSERT: Si existe el DNI → actualiza. Si no existe → crea.
+    const patient = await Patient.findOneAndUpdate(
+      { dni: patientData.dni },          // Buscar por DNI
+      { $set: patientData },             // Actualizar todos los campos
+      { upsert: true, new: true }        // Crear si no existe, devolver el doc actualizado
+    );
+
+    const wasNew = !patient.createdAt || patient.createdAt === patient.updatedAt;
+    console.log(`Paciente DNI ${patientData.dni} ${wasNew ? 'creado' : 'actualizado'} correctamente.`);
+    res.status(200).json({ message: wasNew ? 'Paciente creado' : 'Paciente actualizado', data: patient });
   } catch (error) {
-    console.error('Error saving patient:', error);
+    console.error('Error guardando paciente:', error);
     res.status(500).json({ error: 'Failed to save patient' });
   }
 });

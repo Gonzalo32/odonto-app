@@ -51,8 +51,8 @@ export class PrintTemplateComponent {
     const url = URL.createObjectURL(blob);
     window.open(url, '_blank');
 
-    // Reseteamos el formulario después de generar el PDF
-    this.patientFormService.reset();
+    // Navegar a la pantalla de agradecimiento (que hará el reset después de 3 segundos)
+    this.patientFormService.currentStep.set(7);
   }
 
   // Formateo de Nombre Completo: APELLIDO, Nombre

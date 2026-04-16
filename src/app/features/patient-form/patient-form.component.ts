@@ -7,6 +7,7 @@ import { StepContactComponent } from './steps/step-contact.component';
 import { StepInsuranceComponent } from './steps/step-insurance.component';
 import { StepAddressComponent } from './steps/step-address.component';
 import { StepReviewComponent } from './steps/step-review.component';
+import { StepThankyouComponent } from './steps/step-thankyou.component';
 
 @Component({
   selector: 'app-patient-form',
@@ -18,7 +19,8 @@ import { StepReviewComponent } from './steps/step-review.component';
     StepContactComponent,
     StepInsuranceComponent,
     StepAddressComponent,
-    StepReviewComponent
+    StepReviewComponent,
+    StepThankyouComponent
   ],
   templateUrl: './patient-form.component.html',
   styleUrls: ['./patient-form.component.scss']

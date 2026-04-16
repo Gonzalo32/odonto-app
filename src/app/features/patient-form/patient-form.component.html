@@ -7,7 +7,7 @@
     </div>
   </div>
 
-  <div class="progress-bar-wrapper">
+  <div class="progress-bar-wrapper" *ngIf="patientFormService.currentStep() <= 6">
     <div class="progress-indicator" [style.width.%]="(patientFormService.currentStep() / patientFormService.totalSteps()) * 100"></div>
   </div>
   
@@ -30,6 +30,9 @@
       }
       @case (6) {
         <app-step-review></app-step-review>
+      }
+      @case (7) {
+        <app-step-thankyou></app-step-thankyou>
       }
     }
   </div>
