@@ -18,6 +18,12 @@ export class StepDniComponent {
     dni: [this.patientFormService.formData().dni || '', [Validators.required, Validators.minLength(7), Validators.maxLength(8), Validators.pattern('^[0-9]*$')]]
   });
 
+  onInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/[^0-9]/g, '');
+    this.form.patchValue({ dni: input.value });
+  }
+
   async onSubmit() {
     if (this.form.valid) {
       const dni = this.form.value.dni!;

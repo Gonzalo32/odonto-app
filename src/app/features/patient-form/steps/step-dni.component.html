@@ -5,11 +5,14 @@
       <label for="dni">Por favor, ingrese su DNI</label>
       <input 
         id="dni" 
-        type="tel" 
+        type="text" 
         formControlName="dni" 
         placeholder="Ej: 12345678" 
         maxlength="8"
         autocomplete="off"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        (input)="onInput($event)"
       >
       @if (form.controls.dni.invalid && form.controls.dni.touched) {
         <span class="error-msg" style="color: var(--error-color);">Ingrese un DNI válido (sólo números)</span>

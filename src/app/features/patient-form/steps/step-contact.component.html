@@ -3,7 +3,16 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="telefono">Teléfono (Celular)</label>
-      <input id="telefono" type="tel" formControlName="telefono" autocomplete="off" placeholder="Ej: 1122334455">
+      <input 
+        id="telefono" 
+        type="text" 
+        formControlName="telefono" 
+        autocomplete="off" 
+        placeholder="Ej: 1122334455" 
+        inputmode="numeric" 
+        pattern="[0-9]*" 
+        (input)="onInput($event)"
+      >
       @if (form.controls.telefono.invalid && form.controls.telefono.touched) {
         <span class="error-msg" style="color: var(--error-color);">Ingrese un teléfono válido</span>
       }

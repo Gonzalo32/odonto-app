@@ -11,7 +11,16 @@
 
     <div class="form-group" style="margin-top: var(--spacing-md);">
       <label for="numeroAfiliado">Número de Afiliado (Opcional)</label>
-      <input id="numeroAfiliado" type="text" formControlName="numeroAfiliado" autocomplete="off" placeholder="Ej: 123456789">
+      <input 
+        id="numeroAfiliado" 
+        type="text" 
+        formControlName="numeroAfiliado" 
+        autocomplete="off" 
+        placeholder="Ej: 123456789"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        (input)="onInput($event)"
+      >
     </div>
 
     <div class="actions">

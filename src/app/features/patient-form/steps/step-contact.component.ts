@@ -19,6 +19,12 @@ export class StepContactComponent {
     fechaNacimiento: [this.patientFormService.formData().fechaNacimiento || '', [Validators.required]]
   });
 
+  onInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/[^0-9]/g, '');
+    this.form.patchValue({ telefono: input.value });
+  }
+
   onPrevious() {
     this.patientFormService.previousStep();
   }
