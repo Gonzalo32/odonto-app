@@ -27,24 +27,29 @@ export class PrintTemplateComponent {
   }
 
   async generatePDF() {
+    // Pequeña espera para asegurar que el DOM y estilos estén listos
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     const data = document.getElementById('print-data');
     if (!data) return;
 
-    // Aumentamos el factor de escala para mejor calidad en texto pequeño
+    // Forzamos las dimensiones para que html2canvas no corte por el viewport
     const canvas = await html2canvas(data, {
       scale: 3,
       useCORS: true,
       logging: false,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
+      width: 794,  // ~21cm a 96dpi
+      height: 559  // ~14.8cm a 96dpi
     });
 
     const imgData = canvas.toDataURL('image/png');
     
-    // Crear PDF: 'l' (landscape), 'cm' (centímetros), [ancho, alto]
-    const pdf = new jsPDF('l', 'cm', [18.9, 13.1]);
+    // Crear PDF: 'l' (landscape), 'cm' (centímetros), [ancho, alto] (A5)
+    const pdf = new jsPDF('l', 'cm', [21.0, 14.8]);
     
     // Añadimos la imagen ajustada al tamaño total
-    pdf.addImage(imgData, 'PNG', 0, 0, 18.9, 13.1);
+    pdf.addImage(imgData, 'PNG', 0, 0, 21.0, 14.8);
 
     // Abrir en nueva pestaña para previsualización
     const blob = pdf.output('blob');

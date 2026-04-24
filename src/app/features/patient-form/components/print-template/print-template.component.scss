@@ -4,8 +4,8 @@
   left: -200vw; /* Fuera de la pantalla */
   top: 0;
   display: block;
-  width: 18.9cm;
-  height: 13.1cm;
+  width: 21.0cm;
+  height: 14.8cm;
   background-color: white;
   font-family: 'Courier New', Courier, monospace;
   font-size: 11pt;
@@ -14,8 +14,10 @@
 }
 
 .print-container {
-  width: 18.9cm;
-  height: 13.1cm;
+  --off-x: 2.2cm;
+  --off-y: -0.7cm;
+  width: 21.0cm;
+  height: 14.8cm;
   position: relative;
   background-color: white;
 }
@@ -27,16 +29,16 @@
 
 /* Fila 1 */
 .name-field {
-  top: 1.6cm;
-  left: 6.2cm;
+  top: calc(1.6cm + var(--off-y));
+  left: calc(6.2cm + var(--off-x));
   font-weight: bold;
   font-size: 12pt;
 }
 
 .afiliado-container {
   position: absolute;
-  top: 1.6cm;
-  left: 12.2cm;
+  top: calc(1.6cm + var(--off-y));
+  left: calc(12.7cm + var(--off-x)); /* +5mm (12.2 -> 12.7) */
   display: flex;
   gap: 0;
 
@@ -49,46 +51,46 @@
 
 /* Fila 2 */
 .domicilio-field {
-  top: 2.35cm;
-  left: 2.5cm;
+  top: calc(2.35cm + var(--off-y));
+  left: calc(3.0cm + var(--off-x)); /* +5mm (2.5 -> 3.0) */
 }
 
 .localidad-field {
-  top: 2.35cm;
-  left: 11.2cm;
+  top: calc(2.35cm + var(--off-y));
+  left: calc(11.7cm + var(--off-x)); /* +5mm (11.2 -> 11.7) */
 }
 
 .tel-field {
-  top: 2.35cm;
-  left: 16.2cm;
+  top: calc(2.35cm + var(--off-y));
+  left: calc(16.7cm + var(--off-x)); /* +5mm (16.2 -> 16.7) */
 }
 
 /* Fila 3 */
 .dni-field {
-  top: 3.1cm;
-  left: 2.2cm;
+  top: calc(3.1cm + var(--off-y));
+  left: calc(2.7cm + var(--off-x)); /* +5mm (2.2 -> 2.7) */
 }
 
 .fecha-nac-container {
   position: absolute;
-  top: 3.1cm;
-  left: 7.7cm;
+  top: calc(3.1cm + var(--off-y));
+  left: calc(9.4cm + var(--off-x)); /* +17mm (7.7 -> 9.4) */
   
   span {
     position: absolute;
     text-align: center;
   }
   .day   { left: 0; width: 0.8cm; }
-  .month { left: 1.1cm; width: 0.8cm; }
-  .year  { left: 2.2cm; width: 0.8cm; }
+  .month { left: 1.1cm; width: 0.8cm; } /* Mantiene 3mm de espacio (0.8 + 0.3) */
+  .year  { left: 2.2cm; width: 0.8cm; } /* Mantiene 3mm de espacio (1.1 + 0.8 + 0.3) */
 }
 
 .edad-field {
-  top: 3.1cm;
-  left: 12.8cm;
+  top: calc(3.1cm + var(--off-y));
+  left: calc(12.8cm + var(--off-x));
 }
 
 .obra-social-field {
-  top: 3.1cm;
-  left: 15.5cm;
+  top: calc(3.1cm + var(--off-y));
+  left: calc(15.5cm + var(--off-x));
 }
