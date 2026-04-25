@@ -1,11 +1,12 @@
 /* Estilo para que no se vea en pantalla, pero sea "capturable" por html2canvas */
 :host {
   position: fixed;
-  left: -200vw; /* Fuera de la pantalla */
+  left: -200vw;
+  /* Fuera de la pantalla */
   top: 0;
   display: block;
-  width: 21.0cm;
-  height: 14.8cm;
+  width: 29.7cm;
+  height: 21.0cm;
   background-color: white;
   font-family: 'Courier New', Courier, monospace;
   font-size: 11pt;
@@ -14,10 +15,12 @@
 }
 
 .print-container {
-  --off-x: 2.2cm;
-  --off-y: -0.7cm;
-  width: 21.0cm;
-  height: 14.8cm;
+  --off-x: 10.2cm;
+  /* Corrido 8cm a la derecha (2.2 + 8.0) */
+  --off-y: 4.5cm;
+  /* Subido 3.5cm (8.0 - 3.5) */
+  width: 29.7cm;
+  height: 21.0cm;
   position: relative;
   background-color: white;
 }
@@ -38,12 +41,16 @@
 .afiliado-container {
   position: absolute;
   top: calc(1.6cm + var(--off-y));
-  left: calc(12.7cm + var(--off-x)); /* +5mm (12.2 -> 12.7) */
+  /* Vuelve al primer renglón */
+  left: calc(11.8cm + var(--off-x));
+  /* Movido 23mm a la izquierda (14.5 - 2.3) para evitar que se salga */
   display: flex;
-  gap: 0;
+  gap: 2mm;
+  /* Separación de 2mm entre dígitos */
 
   .digit {
-    width: 0.435cm;
+    width: 0.3cm;
+    /* Más compacto para evitar el borde del papel A5 */
     text-align: center;
     display: inline-block;
   }
@@ -51,46 +58,73 @@
 
 /* Fila 2 */
 .domicilio-field {
-  top: calc(2.35cm + var(--off-y));
-  left: calc(3.0cm + var(--off-x)); /* +5mm (2.5 -> 3.0) */
+  top: calc(2.15cm + var(--off-y));
+  /* Subido 2mm (2.35 - 0.2) */
+  left: calc(3.0cm + var(--off-x));
+  /* +5mm (2.5 -> 3.0) */
 }
 
 .localidad-field {
-  top: calc(2.35cm + var(--off-y));
-  left: calc(11.7cm + var(--off-x)); /* +5mm (11.2 -> 11.7) */
+  top: calc(2.15cm + var(--off-y));
+  /* Subido 2mm (2.35 - 0.2) */
+  left: calc(11.9cm + var(--off-x));
+  /* +2mm (11.7 -> 11.9) */
 }
 
 .tel-field {
-  top: calc(2.35cm + var(--off-y));
-  left: calc(16.7cm + var(--off-x)); /* +5mm (16.2 -> 16.7) */
+  top: calc(2.15cm + var(--off-y));
+  /* Subido 2mm (2.35 - 0.2) */
+  left: calc(16.7cm + var(--off-x));
+  /* +5mm (16.2 -> 16.7) */
 }
 
 /* Fila 3 */
 .dni-field {
-  top: calc(3.1cm + var(--off-y));
-  left: calc(2.7cm + var(--off-x)); /* +5mm (2.2 -> 2.7) */
+  top: calc(2.7cm + var(--off-y));
+  /* Subido 4mm (3.1 - 0.4) */
+  left: calc(2.7cm + var(--off-x));
+  /* +5mm (2.2 -> 2.7) */
 }
 
 .fecha-nac-container {
   position: absolute;
-  top: calc(3.1cm + var(--off-y));
-  left: calc(9.4cm + var(--off-x)); /* +17mm (7.7 -> 9.4) */
-  
+  top: calc(2.7cm + var(--off-y));
+  /* Subido 4mm (3.1 - 0.4) */
+  left: calc(9.2cm + var(--off-x));
+  /* -2mm (9.4 -> 9.2) */
+
   span {
     position: absolute;
     text-align: center;
   }
-  .day   { left: 0; width: 0.8cm; }
-  .month { left: 1.1cm; width: 0.8cm; } /* Mantiene 3mm de espacio (0.8 + 0.3) */
-  .year  { left: 2.2cm; width: 0.8cm; } /* Mantiene 3mm de espacio (1.1 + 0.8 + 0.3) */
+
+  .day {
+    left: 0;
+    width: 0.4cm;
+  }
+
+  .month {
+    left: 0.6cm;
+    width: 0.4cm;
+  }
+
+  /* Espacio entre cada uno de 2mm (0.4 + 0.2 = 0.6) */
+  .year {
+    left: 1.2cm;
+    width: 0.4cm;
+  }
+
+  /* Total de extremo a extremo: 1.2 + 0.4 = 1.6cm (16mm) */
 }
 
 .edad-field {
-  top: calc(3.1cm + var(--off-y));
+  top: calc(2.7cm + var(--off-y));
+  /* Subido 4mm (3.1 - 0.4) */
   left: calc(12.8cm + var(--off-x));
 }
 
 .obra-social-field {
-  top: calc(3.1cm + var(--off-y));
+  top: calc(2.7cm + var(--off-y));
+  /* Subido 4mm (3.1 - 0.4) */
   left: calc(15.5cm + var(--off-x));
 }
