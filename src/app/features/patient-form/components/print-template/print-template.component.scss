@@ -80,16 +80,16 @@
 
 /* Fila 3 */
 .dni-field {
-  top: calc(2.7cm + var(--off-y));
-  /* Subido 4mm (3.1 - 0.4) */
+  top: calc(2.9cm + var(--off-y));
+  /* Bajado 2mm (2.7 + 0.2) */
   left: calc(2.7cm + var(--off-x));
   /* +5mm (2.2 -> 2.7) */
 }
 
 .fecha-nac-container {
   position: absolute;
-  top: calc(2.7cm + var(--off-y));
-  /* Subido 4mm (3.1 - 0.4) */
+  top: calc(2.9cm + var(--off-y));
+  /* Bajado 2mm (2.7 + 0.2) */
   left: calc(9.2cm + var(--off-x));
   /* -2mm (9.4 -> 9.2) */
 
@@ -118,13 +118,13 @@
 }
 
 .edad-field {
-  top: calc(2.7cm + var(--off-y));
-  /* Subido 4mm (3.1 - 0.4) */
-  left: calc(12.8cm + var(--off-x));
+  top: calc(2.9cm + var(--off-y));
+  /* Bajado 2mm (2.7 + 0.2) */
+  left: calc(12.1cm + var(--off-x));
 }
 
 .obra-social-field {
-  top: calc(2.7cm + var(--off-y));
-  /* Subido 4mm (3.1 - 0.4) */
+  top: calc(2.9cm + var(--off-y));
+  /* Bajado 2mm (2.7 + 0.2) */
   left: calc(15.5cm + var(--off-x));
 }
