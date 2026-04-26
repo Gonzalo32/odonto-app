@@ -58,22 +58,22 @@
 
 /* Fila 2 */
 .domicilio-field {
-  top: calc(2.15cm + var(--off-y));
-  /* Subido 2mm (2.35 - 0.2) */
+  top: calc(2.25cm + var(--off-y));
+  /* Bajado 1mm (2.15 + 0.1) */
   left: calc(3.0cm + var(--off-x));
   /* +5mm (2.5 -> 3.0) */
 }
 
 .localidad-field {
-  top: calc(2.15cm + var(--off-y));
-  /* Subido 2mm (2.35 - 0.2) */
+  top: calc(2.25cm + var(--off-y));
+  /* Bajado 1mm (2.15 + 0.1) */
   left: calc(12.1cm + var(--off-x));
   /* +2mm (11.7 -> 11.9) */
 }
 
 .tel-field {
-  top: calc(2.15cm + var(--off-y));
-  /* Subido 2mm (2.35 - 0.2) */
+  top: calc(2.25cm + var(--off-y));
+  /* Bajado 1mm (2.15 + 0.1) */
   left: calc(16.6cm + var(--off-x));
   /* +5mm (16.2 -> 16.7) */
 }
@@ -126,5 +126,5 @@
 .obra-social-field {
   top: calc(2.9cm + var(--off-y));
   /* Bajado 2mm (2.7 + 0.2) */
-  left: calc(15.5cm + var(--off-x));
+  left: calc(15cm + var(--off-x));
 }
