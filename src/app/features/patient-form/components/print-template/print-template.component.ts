@@ -51,12 +51,25 @@ export class PrintTemplateComponent {
     // Añadimos la imagen ajustada al tamaño total de A4
     pdf.addImage(imgData, 'PNG', 0, 0, 29.7, 21.0);
 
-    // Abrir en nueva pestaña para previsualización
+    // Preparar impresión silenciosa (requiere Chrome con flag --kiosk-printing)
     const blob = pdf.output('blob');
     const url = URL.createObjectURL(blob);
-    window.open(url, '_blank');
+    
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = url;
+    document.body.appendChild(iframe);
+    
+    iframe.onload = () => {
+      iframe.contentWindow?.print();
+      // Eliminar iframe después de mandar a imprimir
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+        URL.revokeObjectURL(url);
+      }, 1000);
+    };
 
-    // Navegar a la pantalla de agradecimiento (que hará el reset después de 3 segundos)
+    // Navegar a la pantalla de agradecimiento
     this.patientFormService.currentStep.set(7);
   }
 
