@@ -42,15 +42,14 @@
   position: absolute;
   top: calc(1.6cm + var(--off-y));
   /* Vuelve al primer renglón */
-  left: calc(11.8cm + var(--off-x));
+  left: calc(13.1cm + var(--off-x));
   /* Movido 23mm a la izquierda (14.5 - 2.3) para evitar que se salga */
   display: flex;
-  gap: 2mm;
+  gap: 1mm;
   /* Separación de 2mm entre dígitos */
 
   .digit {
     width: 0.3cm;
-    /* Más compacto para evitar el borde del papel A5 */
     text-align: center;
     display: inline-block;
   }
@@ -90,7 +89,7 @@
   position: absolute;
   top: calc(2.9cm + var(--off-y));
   /* Bajado 2mm (2.7 + 0.2) */
-  left: calc(9.2cm + var(--off-x));
+  left: calc(9.1cm + var(--off-x));
   /* -2mm (9.4 -> 9.2) */
 
   span {
@@ -120,7 +119,7 @@
 .edad-field {
   top: calc(2.9cm + var(--off-y));
   /* Bajado 2mm (2.7 + 0.2) */
-  left: calc(12.1cm + var(--off-x));
+  left: calc(11.8cm + var(--off-x));
 }
 
 .obra-social-field {
