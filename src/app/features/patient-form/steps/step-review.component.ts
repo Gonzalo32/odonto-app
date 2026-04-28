@@ -2,6 +2,80 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PatientFormService } from '../../../core/services/patient-form.service';
 
+const PRINT_CSS = `
+@page { size: A4 landscape; margin: 0; }
+body { margin: 0; padding: 0; }
+.print-container {
+  --off-x: 10.2cm;
+  --off-y: 4.5cm;
+  width: 29.7cm;
+  height: 21.0cm;
+  position: relative;
+  background-color: white;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11pt;
+  color: #000;
+}
+.field {
+  position: absolute;
+  white-space: nowrap;
+}
+.name-field {
+  top: calc(1.6cm + var(--off-y));
+  left: calc(5.9cm + var(--off-x));
+  font-weight: bold;
+  font-size: 10pt;
+}
+.afiliado-container {
+  position: absolute;
+  top: calc(1.6cm + var(--off-y));
+  left: calc(13.1cm + var(--off-x));
+  display: flex;
+  gap: 1mm;
+}
+.afiliado-container .digit {
+  width: 0.3cm;
+  text-align: center;
+  display: inline-block;
+}
+.domicilio-field {
+  top: calc(2.25cm + var(--off-y));
+  left: calc(3.0cm + var(--off-x));
+}
+.localidad-field {
+  top: calc(2.25cm + var(--off-y));
+  left: calc(12.1cm + var(--off-x));
+}
+.tel-field {
+  top: calc(2.25cm + var(--off-y));
+  left: calc(16.6cm + var(--off-x));
+}
+.dni-field {
+  top: calc(2.9cm + var(--off-y));
+  left: calc(2.7cm + var(--off-x));
+}
+.fecha-nac-container {
+  position: absolute;
+  top: calc(2.9cm + var(--off-y));
+  left: calc(9.1cm + var(--off-x));
+}
+.fecha-nac-container span {
+  position: absolute;
+  text-align: center;
+}
+.fecha-nac-container .day   { left: 0;      width: 0.4cm; }
+.fecha-nac-container .month { left: 0.6cm;  width: 0.4cm; }
+.fecha-nac-container .year  { left: 1.2cm;  width: 0.4cm; }
+.edad-field {
+  top: calc(2.9cm + var(--off-y));
+  left: calc(11.8cm + var(--off-x));
+}
+.obra-social-field {
+  top: calc(2.9cm + var(--off-y));
+  left: calc(15cm + var(--off-x));
+}
+`;
+
 @Component({
   selector: 'app-step-review',
   standalone: true,
@@ -130,12 +204,44 @@ export class StepReviewComponent {
     this.patientFormService.savePatientBackground(patient);
 
     setTimeout(() => {
-      window.print();
+      this.printViaIframe();
       setTimeout(() => {
         this.imprimiendo = false;
         this.patientFormService.currentStep.set(7);
       }, 1500);
     }, 300);
+  }
+
+  private printViaIframe() {
+    const printData = document.getElementById('print-data');
+    if (!printData) {
+      window.print();
+      return;
+    }
+
+    const iframe = document.createElement('iframe');
+    iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:297mm;height:210mm;border:none;';
+    document.body.appendChild(iframe);
+
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) {
+      window.print();
+      return;
+    }
+
+    const cleanup = () => {
+      if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+    };
+
+    doc.open();
+    doc.write(`<!DOCTYPE html><html><head><style>${PRINT_CSS}</style></head><body>${printData.outerHTML}</body></html>`);
+    doc.close();
+
+    setTimeout(() => {
+      iframe.contentWindow?.focus();
+      iframe.contentWindow?.print();
+      setTimeout(cleanup, 2000);
+    }, 100);
   }
 
   formatDate(dateStr?: string): string {
