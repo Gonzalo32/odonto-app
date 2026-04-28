@@ -2,7 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Patient } from '../models/patient.model';
 import { environment } from '../../../environments/environment';
-import { firstValueFrom, interval } from 'rxjs';
+import { firstValueFrom, interval, timeout } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class PatientFormService {
@@ -52,8 +52,12 @@ export class PatientFormService {
     }
 
     try {
-      const patients = await firstValueFrom(this.http.get<Patient[]>(`${this.apiUrl}/patients`));
-      const patient = patients.find(p => p.dni === dni);
+      // Busca directamente por DNI con timeout de 3 segundos
+      const patient = await firstValueFrom(
+        this.http.get<Patient>(`${this.apiUrl}/patients/dni/${dni}`).pipe(
+          timeout(3000)
+        )
+      );
 
       if (patient) {
         this.formData.set({ ...patient, fechaNacimiento: this.toHtmlDateInput(patient.fechaNacimiento) });
@@ -61,10 +65,15 @@ export class PatientFormService {
         return true;
       }
       return false;
-    } catch (error) {
-      console.warn('Error buscando en MongoDB (posible offline):', error);
+    } catch (error: any) {
+      if (error.status === 404) {
+        // No encontrado no es un error de red
+        this.isOffline.set(false);
+        return false;
+      }
+      console.warn('Error buscando en MongoDB (timeout o offline):', error);
       this.isOffline.set(true);
-      return false;
+      return false; // Permite avanzar al siguiente paso si hay falla de conexión
     }
   }
 

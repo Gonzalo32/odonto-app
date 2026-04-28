@@ -39,6 +39,19 @@ app.post('/api/patients', async (req, res) => {
   }
 });
 
+app.get('/api/patients/dni/:dni', async (req, res) => {
+  try {
+    const patient = await Patient.findOne({ dni: req.params.dni });
+    if (patient) {
+      res.json(patient);
+    } else {
+      res.status(404).json({ error: 'No encontrado' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Error buscando paciente' });
+  }
+});
+
 app.get('/api/patients', async (req, res) => {
   try {
     const patients = await Patient.find().sort({ createdAt: -1 });
