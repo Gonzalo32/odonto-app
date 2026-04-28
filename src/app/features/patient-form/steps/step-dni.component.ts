@@ -7,8 +7,7 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
   selector: 'app-step-dni',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './step-dni.component.html',
-  styleUrls: ['./step-dni.component.scss']
+  templateUrl: './step-dni.component.html'
 })
 export class StepDniComponent {
   private fb = inject(FormBuilder);
@@ -28,15 +27,12 @@ export class StepDniComponent {
     if (this.form.valid) {
       const dni = this.form.value.dni!;
       this.patientFormService.updateData({ dni });
-      
-      // Buscamos si existe para cargar los datos
+
       const exists = await this.patientFormService.lookupPatientByDni(dni);
-      
+
       if (exists && !this.patientFormService.isEditing()) {
-        // Si existe y NO estamos modificando desde el botón "Modificar", saltamos al resumen
         this.patientFormService.currentStep.set(6);
       } else {
-        // Si no existe o estamos en flujo de modificación, vamos paso a paso
         this.patientFormService.nextStep();
       }
     }

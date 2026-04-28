@@ -1,7 +1,7 @@
 .totem-form-container {
   width: 100vw;
-  height: 100vh; /* Fijo al viewport */
-  overflow: hidden; /* No scroll en el contenedor principal */
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -22,15 +22,15 @@
   flex-direction: column;
   align-items: center;
   color: var(--primary-color);
-  
+
   .logo-main {
     font-family: var(--font-family-title);
-    font-size: clamp(2rem, 8vh, 4rem); /* Escala agresivamente con el alto para no empujar botones */
+    font-size: clamp(2rem, 8vh, 4rem);
     line-height: 1;
     letter-spacing: 0.15em;
     font-weight: 700;
   }
-  
+
   .logo-sub {
     font-family: var(--font-family-body);
     font-size: clamp(0.6rem, 2vw, 1.2rem);
@@ -61,13 +61,13 @@
 .step-container {
   width: 100%;
   max-width: 1200px;
-  flex: 1; /* Ocupa el espacio restante */
+  flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center; /* Centra el contenido verticalmente si hay espacio */
+  align-items: center;
   padding: 0 2rem;
   animation: fadeInUp 0.5s ease-out;
-  overflow: hidden; /* Los pasos individuales controlarán su desbordamiento si es necesario */
+  overflow: hidden;
 }
 
 @keyframes fadeInDown {

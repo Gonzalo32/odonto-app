@@ -133,7 +133,6 @@ export class StepThankyouComponent implements OnInit {
   private patientFormService = inject(PatientFormService);
 
   ngOnInit() {
-    // Esperar 3 segundos y luego resetear al inicio
     setTimeout(() => {
       this.patientFormService.reset();
     }, 3000);

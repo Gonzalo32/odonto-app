@@ -7,7 +7,6 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
   standalone: true,
   imports: [CommonModule],
   template: `
-    <!-- Overlay de impresión para confirmar que el código ejecuta -->
     <div *ngIf="imprimiendo" style="
       position:fixed;top:0;left:0;width:100vw;height:100vh;
       background:rgba(0,0,0,0.85);display:flex;align-items:center;
@@ -19,9 +18,8 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
 
     <div class="step-wrapper">
       <h2 class="step-title">Revisar Datos</h2>
-      
+
       <div class="summary-container">
-        <!-- Columna 1 -->
         <div class="summary-column">
           <div class="summary-item">
             <span class="label">DNI:</span>
@@ -41,7 +39,6 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
           </div>
         </div>
 
-        <!-- Columna 2 -->
         <div class="summary-column">
           <div class="summary-item">
             <span class="label">Fecha Nac.:</span>
@@ -129,19 +126,11 @@ export class StepReviewComponent {
 
   onConfirm() {
     const patient = this.patientFormService.formData();
-
-    // Mostrar el overlay "Imprimiendo..." — confirma visualmente que el botón funciona
     this.imprimiendo = true;
-
-    // Guardar en MongoDB en segundo plano
     this.patientFormService.savePatientBackground(patient);
 
-    // Esperar 300ms para que Angular renderice el overlay,
-    // luego llamar window.print() (sincrono con --kiosk-printing)
     setTimeout(() => {
       window.print();
-
-      // Despues de 1.5s navegar a "Gracias"
       setTimeout(() => {
         this.imprimiendo = false;
         this.patientFormService.currentStep.set(7);

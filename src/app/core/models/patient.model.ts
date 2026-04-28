@@ -1,6 +1,6 @@
 export interface Patient {
-  id?: string | number; // ID para el mock JSON
-  _id?: string;        // ID para MongoDB
+  id?: string | number;
+  _id?: string;
   apellido: string;
   nombre: string;
   dni: string;

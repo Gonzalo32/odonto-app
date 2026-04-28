@@ -3,14 +3,14 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="telefono">Teléfono (Celular)</label>
-      <input 
-        id="telefono" 
-        type="text" 
-        formControlName="telefono" 
-        autocomplete="off" 
-        placeholder="Ej: 1122334455" 
-        inputmode="numeric" 
-        pattern="[0-9]*" 
+      <input
+        id="telefono"
+        type="text"
+        formControlName="telefono"
+        autocomplete="off"
+        placeholder="Ej: 1122334455"
+        inputmode="numeric"
+        pattern="[0-9]*"
         (input)="onInput($event)"
       >
       @if (form.controls.telefono.invalid && form.controls.telefono.touched) {
@@ -20,7 +20,6 @@
 
     <div class="form-group" style="margin-top: var(--spacing-md);">
       <label for="fechaNacimiento">Fecha de Nacimiento</label>
-      <!-- Usamos type="date" para aprovechar el selector nativo del SO en caso de tactil -->
       <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento">
       @if (form.controls.fechaNacimiento.invalid && form.controls.fechaNacimiento.touched) {
         <span class="error-msg" style="color: var(--error-color);">Seleccione su fecha de nacimiento</span>

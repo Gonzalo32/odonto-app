@@ -7,8 +7,7 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
   selector: 'app-step-contact',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './step-contact.component.html',
-  styleUrls: ['./step-contact.component.scss']
+  templateUrl: './step-contact.component.html'
 })
 export class StepContactComponent {
   private fb = inject(FormBuilder);

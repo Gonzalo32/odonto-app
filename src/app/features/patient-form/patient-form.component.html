@@ -1,5 +1,4 @@
 <div class="totem-form-container">
-  <!-- Header Brandeado Tipográfico -->
   <div class="brand-header">
     <div class="brand-logo-text">
       <span class="logo-main">SENZA</span>
@@ -10,7 +9,7 @@
   <div class="progress-bar-wrapper" *ngIf="patientFormService.currentStep() <= 6">
     <div class="progress-indicator" [style.width.%]="(patientFormService.currentStep() / patientFormService.totalSteps()) * 100"></div>
   </div>
-  
+
   <div class="step-container">
     @switch (patientFormService.currentStep()) {
       @case (1) {
@@ -36,6 +35,4 @@
       }
     }
   </div>
-
-  <app-print-template></app-print-template>
 </div>

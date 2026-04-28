@@ -8,7 +8,6 @@ import { StepInsuranceComponent } from './steps/step-insurance.component';
 import { StepAddressComponent } from './steps/step-address.component';
 import { StepReviewComponent } from './steps/step-review.component';
 import { StepThankyouComponent } from './steps/step-thankyou.component';
-import { PrintTemplateComponent } from './components/print-template/print-template.component';
 
 @Component({
   selector: 'app-patient-form',
@@ -21,8 +20,7 @@ import { PrintTemplateComponent } from './components/print-template/print-templa
     StepInsuranceComponent,
     StepAddressComponent,
     StepReviewComponent,
-    StepThankyouComponent,
-    PrintTemplateComponent
+    StepThankyouComponent
   ],
   templateUrl: './patient-form.component.html',
   styleUrls: ['./patient-form.component.scss']

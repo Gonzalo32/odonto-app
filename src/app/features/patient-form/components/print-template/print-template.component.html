@@ -1,19 +1,16 @@
 <div class="print-container" id="print-data">
-  <!-- Fila 1 -->
   <div class="field name-field">{{ fullName() }}</div>
-  
+
   <div class="afiliado-container">
     <span class="digit" *ngFor="let d of afiliadoDigits()">{{ d }}</span>
   </div>
 
-  <!-- Fila 2 -->
   <div class="field domicilio-field">{{ patient().domicilio }}</div>
   <div class="field localidad-field">{{ patient().localidad }}</div>
   <div class="field tel-field">{{ patient().telefono }}</div>
 
-  <!-- Fila 3 -->
   <div class="field dni-field">{{ patient().dni }}</div>
-  
+
   <div class="fecha-nac-container">
     <span class="day">{{ formattedBirthDate().d }}</span>
     <span class="month">{{ formattedBirthDate().m }}</span>
@@ -23,4 +20,3 @@
   <div class="field edad-field">{{ age() }}</div>
   <div class="field obra-social-field">{{ patient().obraSocial }}</div>
 </div>
-

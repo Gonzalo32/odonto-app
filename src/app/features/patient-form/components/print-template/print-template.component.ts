@@ -2,11 +2,6 @@ import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PatientFormService } from '../../../../core/services/patient-form.service';
 
-/**
- * Este componente existe únicamente para mantener el HTML del template fuera de pantalla
- * como referencia visual. La impresión real se realiza en step-review.component.ts
- * generando su propio HTML en un iframe invisible.
- */
 @Component({
   selector: 'app-print-template',
   standalone: true,
