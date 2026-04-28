@@ -45,9 +45,8 @@ if not exist "%CHROME%" set "CHROME=C:\Program Files (x86)\Google\Chrome\Applica
 TASKKILL /F /IM chrome.exe /T >nul 2>&1
 timeout /t 1 /nobreak >nul
 
-echo [INFO] Abriendo Totem con DevTools habilitado...
-:: Quitamos --kiosk temporalmente para que puedas usar F12 y ver la consola si el auto-open falla
-start "" "%CHROME%" --kiosk-printing --auto-open-devtools-for-tabs --no-first-run --disable-translate --disable-infobars --disable-features=TranslateUI "%APP_URL%"
+echo [INFO] Abriendo Totem en modo kiosco...
+start "" "%CHROME%" --kiosk --kiosk-printing --auto-open-devtools-for-tabs --no-first-run --disable-translate --disable-infobars --disable-features=TranslateUI "%APP_URL%"
 
 echo [OK] Totem iniciado correctamente.
 goto :fin
