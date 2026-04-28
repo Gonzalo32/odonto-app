@@ -83,26 +83,20 @@ export class PatientFormService {
     }
   }
 
-  // Guardado Híbrido con auto-reintento
-  async saveAndPrint() {
-    // 1. Disparar el proceso de impresión inmediatamente
-    this.triggerPrint.update(v => v + 1);
-
-    // 2. Preparar datos para el guardado
-    const data = this.formData();
+  // Guarda el paciente en segundo plano (sin bloquear la UI ni imprimir)
+  // La impresión y navegación la maneja step-review.component.ts directamente.
+  savePatientBackground(data: Partial<Patient>) {
     const { _id, id, ...cleanData } = data as any;
     const patientToSave: Patient = {
       ...cleanData,
-      apellido: cleanData.apellido!,
-      nombre: cleanData.nombre!,
-      dni: cleanData.dni!,
-      domicilio: cleanData.domicilio!,
-      localidad: cleanData.localidad!,
+      apellido: cleanData.apellido ?? '',
+      nombre: cleanData.nombre ?? '',
+      dni: cleanData.dni ?? '',
+      domicilio: cleanData.domicilio ?? '',
+      localidad: cleanData.localidad ?? '',
       fechaNacimiento: this.toDdMmAaaa(cleanData.fechaNacimiento),
       actualizadoEn: new Date().toISOString()
     };
-
-    // 3. Ejecutar el guardado de forma asíncrona para no bloquear al usuario
     this.executeSave(patientToSave);
   }
 
