@@ -21,14 +21,14 @@ body { margin: 0; padding: 0; }
   white-space: nowrap;
 }
 .name-field {
-  top: calc(1.6cm + var(--off-y));
+  top: calc(1.7cm + var(--off-y));
   left: calc(5.9cm + var(--off-x));
   font-weight: bold;
   font-size: 10pt;
 }
 .afiliado-container {
   position: absolute;
-  top: calc(1.6cm + var(--off-y));
+  top: calc(1.7cm + var(--off-y));
   left: calc(13.1cm + var(--off-x));
   display: flex;
   gap: 1mm;
@@ -39,24 +39,24 @@ body { margin: 0; padding: 0; }
   display: inline-block;
 }
 .domicilio-field {
-  top: calc(2.25cm + var(--off-y));
+  top: calc(2.35cm + var(--off-y));
   left: calc(3.0cm + var(--off-x));
 }
 .localidad-field {
-  top: calc(2.25cm + var(--off-y));
+  top: calc(2.35cm + var(--off-y));
   left: calc(12.1cm + var(--off-x));
 }
 .tel-field {
-  top: calc(2.25cm + var(--off-y));
+  top: calc(2.35cm + var(--off-y));
   left: calc(16.6cm + var(--off-x));
 }
 .dni-field {
-  top: calc(2.9cm + var(--off-y));
+  top: calc(3.0cm + var(--off-y));
   left: calc(2.7cm + var(--off-x));
 }
 .fecha-nac-container {
   position: absolute;
-  top: calc(2.9cm + var(--off-y));
+  top: calc(3.0cm + var(--off-y));
   left: calc(9.1cm + var(--off-x));
 }
 .fecha-nac-container span {
@@ -67,11 +67,11 @@ body { margin: 0; padding: 0; }
 .fecha-nac-container .month { left: 0.6cm;  width: 0.4cm; }
 .fecha-nac-container .year  { left: 1.2cm;  width: 0.4cm; }
 .edad-field {
-  top: calc(2.9cm + var(--off-y));
+  top: calc(3.0cm + var(--off-y));
   left: calc(11.8cm + var(--off-x));
 }
 .obra-social-field {
-  top: calc(2.9cm + var(--off-y));
+  top: calc(3.0cm + var(--off-y));
   left: calc(15cm + var(--off-x));
 }
 `;
