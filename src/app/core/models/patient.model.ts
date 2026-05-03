@@ -11,6 +11,7 @@ export interface Patient {
   edad?: number;
   obraSocial?: string;
   numeroAfiliado?: string;
+  observacion?: string[][];
   creadoEn?: string | Date;
   actualizadoEn?: string | Date;
 }

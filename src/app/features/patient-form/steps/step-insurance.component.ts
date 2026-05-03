@@ -55,7 +55,7 @@ export class StepInsuranceComponent {
       "O.S.PE.PRI", "FORN", "ARSALUD S.A.", "SanCorSalud", "Unión Obrera Metalúrgica", 
       "CORA", "Avalian", "Caja Forense", "CEO-MDP", "Consulmed", "OSDOP", "DAS", "Galeno", 
       "Gerdanna Salud", "SANIDAD", "Osfatun", "Jerárquicos Salud", "La Segunda", "OSFALYF", 
-      "MCA", "MEDICUS", "Medifé", "Federada Salud", "TV SALUD", "OSPJN", "O.S.P.E.S", "OSDE", 
+      "MCA", "MEDICUS","ISSN", "Medifé", "Federada Salud", "TV SALUD", "OSPJN", "O.S.P.E.S", "OSDE", 
       "Prevención Salud", "MEOPP", "Sanitas", "SOSUNC", "Swiss MEDICAL", "OSAPM", "OSPSIP", 
       "OSPESGA salud", "SaludTotal", "SOCDUS SA", "OSTPCPH y ARA-", "UTEPLIMSALUD", 
       "OPSA OSPPCyQ", "OSDIPP", "OSPE", "Obra Social Ferroviaria", "Integral compromiso médico", 

@@ -17,6 +17,7 @@ export class PatientFormService {
   isLastStep = computed(() => this.currentStep() === this.totalSteps());
   isOffline = signal<boolean>(false);
   isEditing = signal<boolean>(false);
+  private originalData = signal<Partial<Patient>>({});
 
   constructor() {
     interval(30000).subscribe(() => this.syncPending());
@@ -47,7 +48,9 @@ export class PatientFormService {
   async lookupPatientByDni(dni: string): Promise<boolean> {
     const localMatch = this.pendingPatients().find(p => p.dni === dni);
     if (localMatch) {
-      this.formData.set({ ...localMatch, fechaNacimiento: this.toHtmlDateInput(localMatch.fechaNacimiento) });
+      const data = { ...localMatch, fechaNacimiento: this.toHtmlDateInput(localMatch.fechaNacimiento) };
+      this.formData.set(data);
+      this.originalData.set(JSON.parse(JSON.stringify(data)));
       return true;
     }
 
@@ -60,7 +63,9 @@ export class PatientFormService {
       );
 
       if (patient) {
-        this.formData.set({ ...patient, fechaNacimiento: this.toHtmlDateInput(patient.fechaNacimiento) });
+        const data = { ...patient, fechaNacimiento: this.toHtmlDateInput(patient.fechaNacimiento) };
+        this.formData.set(data);
+        this.originalData.set(JSON.parse(JSON.stringify(data)));
         this.isOffline.set(false);
         return true;
       }
@@ -79,6 +84,23 @@ export class PatientFormService {
 
   savePatientBackground(data: Partial<Patient>) {
     const { _id, id, ...cleanData } = data as any;
+    const isNew = !(_id || id);
+    const nowStr = this.getCurrentDateFormatted();
+    
+    let history: string[][] = Array.isArray(cleanData.observacion) ? [...cleanData.observacion] : [];
+    let observationMessage = '';
+
+    if (isNew) {
+      observationMessage = 'ingreso sus datos por primera vez';
+    } else {
+      const changes = this.getChangedFields(this.originalData(), cleanData);
+      observationMessage = changes.length > 0 
+        ? `modifico el campo ${changes.join(', ')}`
+        : 'sin cambios';
+    }
+
+    history.push([nowStr, observationMessage]);
+
     const patientToSave: Patient = {
       ...cleanData,
       apellido: cleanData.apellido ?? '',
@@ -87,9 +109,45 @@ export class PatientFormService {
       domicilio: cleanData.domicilio ?? '',
       localidad: cleanData.localidad ?? '',
       fechaNacimiento: this.toDdMmAaaa(cleanData.fechaNacimiento),
+      observacion: history,
       actualizadoEn: new Date().toISOString()
     };
+    
+    if (_id) (patientToSave as any)._id = _id;
+    if (id) (patientToSave as any).id = id;
+
     this.executeSave(patientToSave);
+  }
+
+  private getCurrentDateFormatted(): string {
+    const now = new Date();
+    return `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+  }
+
+  private getChangedFields(original: Partial<Patient>, current: any): string[] {
+    const fieldsToCheck = [
+      'apellido', 'nombre', 'domicilio', 'localidad', 
+      'telefono', 'fechaNacimiento', 'obraSocial', 'numeroAfiliado'
+    ];
+    
+    const labels: { [key: string]: string } = {
+      apellido: 'apellido',
+      nombre: 'nombre',
+      domicilio: 'domicilio',
+      localidad: 'localidad',
+      telefono: 'teléfono',
+      fechaNacimiento: 'cumpleaños',
+      obraSocial: 'obra social',
+      numeroAfiliado: 'número de afiliado'
+    };
+
+    return fieldsToCheck
+      .filter(field => {
+        const val1 = (original as any)[field] || '';
+        const val2 = current[field] || '';
+        return val1.toString().trim() !== val2.toString().trim();
+      })
+      .map(field => labels[field] || field);
   }
 
   private async executeSave(patient: Patient) {

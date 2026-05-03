@@ -10,6 +10,7 @@ const PatientSchema = new mongoose.Schema({
   numeroAfiliado: String,
   localidad: String,
   domicilio: String,
+  observacion: { type: Array, default: [] },
   createdAt: { type: Date, default: Date.now }
 });
 
