@@ -29,9 +29,9 @@ body { margin: 0; padding: 0; }
 .afiliado-container {
   position: absolute;
   top: calc(1.7cm + var(--off-y));
-  left: calc(13.1cm + var(--off-x));
+  left: calc(13.25cm + var(--off-x));
   display: flex;
-  gap: 1mm;
+  gap: 0.9mm;
 }
 .afiliado-container .digit {
   width: 0.3cm;
@@ -57,7 +57,7 @@ body { margin: 0; padding: 0; }
 .fecha-nac-container {
   position: absolute;
   top: calc(3.0cm + var(--off-y));
-  left: calc(9.1cm + var(--off-x));
+  left: calc(9.3cm + var(--off-x));
   font-size: 9pt;
 }
 .fecha-nac-container span {

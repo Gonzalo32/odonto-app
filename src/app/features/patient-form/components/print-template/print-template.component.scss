@@ -47,9 +47,9 @@
 .afiliado-container {
   position: absolute;
   top: calc(1.7cm + var(--off-y));
-  left: calc(13.1cm + var(--off-x));
+  left: calc(13.41cm + var(--off-x));
   display: flex;
-  gap: 1mm;
+  gap: 0.5mm;
 
   .digit {
     width: 0.3cm;
@@ -81,7 +81,7 @@
 .fecha-nac-container {
   position: absolute;
   top: calc(3.0cm + var(--off-y));
-  left: calc(9.1cm + var(--off-x));
+  left: calc(9.3cm + var(--off-x));
   font-size: 9pt;
 
   span {
