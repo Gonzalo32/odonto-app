@@ -58,6 +58,7 @@ body { margin: 0; padding: 0; }
   position: absolute;
   top: calc(3.0cm + var(--off-y));
   left: calc(9.1cm + var(--off-x));
+  font-size: 9pt;
 }
 .fecha-nac-container span {
   position: absolute;
@@ -72,7 +73,7 @@ body { margin: 0; padding: 0; }
 }
 .obra-social-field {
   top: calc(3.0cm + var(--off-y));
-  left: calc(15cm + var(--off-x));
+  left: calc(14.5cm + var(--off-x));
 }
 `;
 
