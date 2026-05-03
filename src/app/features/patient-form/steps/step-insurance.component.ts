@@ -50,15 +50,18 @@ export class StepInsuranceComponent {
   patientFormService = inject(PatientFormService);
 
   obrasSociales = [
-    "Particular", "O.S.PE.PRI", "FORN", "ARSALUD S.A.", "SanCorSalud", "Unión Obrera Metalúrgica", 
-    "CORA", "Avalian", "Caja Forense", "CEO-MDP", "Consulmed", "OSDOP", "DAS", "Galeno", 
-    "Gerdanna Salud", "SANIDAD", "Osfatun", "Jerárquicos Salud", "La Segunda", "OSFALYF", 
-    "MCA", "MEDICUS", "Medifé", "Federada Salud", "TV SALUD", "OSPJN", "O.S.P.E.S", "OSDE", 
-    "Prevención Salud", "MEOPP", "Sanitas", "SOSUNC", "Swiss MEDICAL", "OSAPM", "OSPSIP", 
-    "OSPESGA salud", "SaludTotal", "SOCDUS SA", "OSTPCPH y ARA-", "UTEPLIMSALUD", 
-    "OPSA OSPPCyQ", "OSDIPP", "OSPE", "Obra Social Ferroviaria", "Integral compromiso médico", 
-    "Servicio Penitenciario Federal"
-  ].sort();
+    "Particular",
+    ...[
+      "O.S.PE.PRI", "FORN", "ARSALUD S.A.", "SanCorSalud", "Unión Obrera Metalúrgica", 
+      "CORA", "Avalian", "Caja Forense", "CEO-MDP", "Consulmed", "OSDOP", "DAS", "Galeno", 
+      "Gerdanna Salud", "SANIDAD", "Osfatun", "Jerárquicos Salud", "La Segunda", "OSFALYF", 
+      "MCA", "MEDICUS", "Medifé", "Federada Salud", "TV SALUD", "OSPJN", "O.S.P.E.S", "OSDE", 
+      "Prevención Salud", "MEOPP", "Sanitas", "SOSUNC", "Swiss MEDICAL", "OSAPM", "OSPSIP", 
+      "OSPESGA salud", "SaludTotal", "SOCDUS SA", "OSTPCPH y ARA-", "UTEPLIMSALUD", 
+      "OPSA OSPPCyQ", "OSDIPP", "OSPE", "Obra Social Ferroviaria", "Integral compromiso médico", 
+      "Servicio Penitenciario Federal"
+    ].sort()
+  ];
 
   filteredObras = signal<string[]>([...this.obrasSociales]);
   showDropdown = signal(false);
@@ -77,6 +80,9 @@ export class StepInsuranceComponent {
 
   selectObra(obra: string) {
     this.form.patchValue({ obraSocial: obra });
+    if (obra === 'Particular') {
+      this.form.patchValue({ numeroAfiliado: '' });
+    }
     this.showDropdown.set(false);
   }
 
