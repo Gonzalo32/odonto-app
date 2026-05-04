@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PatientFormService } from '../../../core/services/patient-form.service';
@@ -12,6 +12,28 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
     .autocomplete-container {
       position: relative;
       width: 100%;
+    }
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .clear-btn {
+      position: absolute;
+      right: 15px;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      transition: color 0.2s;
+    }
+    .clear-btn:hover {
+      color: var(--error-color);
     }
     .options-list {
       position: absolute;
@@ -34,7 +56,7 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
       color: var(--text-color);
       font-size: 1.1rem;
     }
-    .option-item:hover {
+    .option-item:hover, .option-item.active {
       background: var(--primary-light);
       color: var(--primary-color);
     }
@@ -48,6 +70,8 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
 export class StepInsuranceComponent {
   private fb = inject(FormBuilder);
   patientFormService = inject(PatientFormService);
+
+  @ViewChild('optionsList') optionsList?: ElementRef;
 
   obrasSociales = [
     "Particular",
@@ -65,6 +89,7 @@ export class StepInsuranceComponent {
 
   filteredObras = signal<string[]>([...this.obrasSociales]);
   showDropdown = signal(false);
+  activeIndex = signal<number>(-1);
 
   form = this.fb.group({
     obraSocial: [this.patientFormService.formData().obraSocial || '', [Validators.required]],
@@ -73,9 +98,10 @@ export class StepInsuranceComponent {
 
   filterObras() {
     const val = this.form.get('obraSocial')?.value?.toLowerCase() || '';
-    this.filteredObras.set(
-      this.obrasSociales.filter(o => o.toLowerCase().includes(val))
-    );
+    const filtered = this.obrasSociales.filter(o => o.toLowerCase().includes(val));
+    this.filteredObras.set(filtered);
+    this.activeIndex.set(-1);
+    if (!this.showDropdown()) this.showDropdown.set(true);
   }
 
   selectObra(obra: string) {
@@ -84,6 +110,57 @@ export class StepInsuranceComponent {
       this.form.patchValue({ numeroAfiliado: '' });
     }
     this.showDropdown.set(false);
+    this.activeIndex.set(-1);
+  }
+
+  clearSelection() {
+    this.form.patchValue({ obraSocial: '' });
+    this.filterObras();
+    this.showDropdown.set(true);
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+    if (!this.showDropdown()) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        this.showDropdown.set(true);
+        this.filterObras();
+      }
+      return;
+    }
+
+    const list = this.filteredObras();
+    if (list.length === 0) return;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        this.activeIndex.update(i => (i + 1) % list.length);
+        this.scrollToActive();
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.activeIndex.update(i => (i - 1 + list.length) % list.length);
+        this.scrollToActive();
+        break;
+      case 'Enter':
+        if (this.activeIndex() >= 0) {
+          event.preventDefault();
+          this.selectObra(list[this.activeIndex()]);
+        }
+        break;
+      case 'Escape':
+        this.showDropdown.set(false);
+        break;
+    }
+  }
+
+  private scrollToActive() {
+    setTimeout(() => {
+      const activeEl = this.optionsList?.nativeElement.querySelector('.option-item.active');
+      if (activeEl) {
+        activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    });
   }
 
   onInput(event: Event) {

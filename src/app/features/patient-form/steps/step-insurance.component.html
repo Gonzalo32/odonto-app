@@ -4,21 +4,34 @@
     <div class="form-group">
       <label for="obraSocial">Obra Social / Prepaga</label>
       <div class="autocomplete-container">
-        <input 
-          id="obraSocial" 
-          type="text" 
-          formControlName="obraSocial" 
-          autocomplete="off" 
-          placeholder="Ej: OSDE, Swiss Medical"
-          (input)="filterObras()"
-          (focus)="showDropdown.set(true); filterObras()"
-          (blur)="hideDropdown()"
-        >
+        <div class="input-wrapper">
+          <input 
+            id="obraSocial" 
+            type="text" 
+            formControlName="obraSocial" 
+            autocomplete="off" 
+            placeholder="Ej: OSDE, Swiss Medical"
+            (input)="filterObras()"
+            (focus)="showDropdown.set(true); filterObras()"
+            (blur)="hideDropdown()"
+            (keydown)="onKeyDown($event)"
+          >
+          <button 
+            type="button" 
+            class="clear-btn" 
+            *ngIf="form.get('obraSocial')?.value"
+            (click)="clearSelection()"
+            title="Borrar selección"
+          >
+            &times;
+          </button>
+        </div>
         
-        <div class="options-list" *ngIf="showDropdown()">
+        <div class="options-list" *ngIf="showDropdown()" #optionsList>
           <div 
             class="option-item" 
-            *ngFor="let obra of filteredObras()" 
+            *ngFor="let obra of filteredObras(); let i = index" 
+            [class.active]="i === activeIndex()"
             (click)="selectObra(obra)"
           >
             {{ obra }}
