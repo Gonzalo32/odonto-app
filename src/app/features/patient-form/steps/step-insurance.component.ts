@@ -93,7 +93,7 @@ export class StepInsuranceComponent {
 
   form = this.fb.group({
     obraSocial: [this.patientFormService.formData().obraSocial || '', [Validators.required]],
-    numeroAfiliado: [this.patientFormService.formData().numeroAfiliado || '', [Validators.pattern('^[0-9]*$')]]
+    numeroAfiliado: [this.patientFormService.formData().numeroAfiliado || '']
   });
 
   filterObras() {
@@ -161,12 +161,6 @@ export class StepInsuranceComponent {
         activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       }
     });
-  }
-
-  onInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    input.value = input.value.replace(/[^0-9]/g, '');
-    this.form.patchValue({ numeroAfiliado: input.value });
   }
 
   onPrevious() {

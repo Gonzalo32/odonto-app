@@ -30,7 +30,7 @@ export class PrintTemplateComponent {
   });
 
   afiliadoDigits = computed(() => {
-    const num = (this.patient().numeroAfiliado || '').replace(/\D/g, '');
+    const num = (this.patient().numeroAfiliado || '').trim().toUpperCase();
     const digits = num.split('').slice(-15);
     const padded = new Array(15).fill('');
     digits.forEach((d, i) => { padded[15 - digits.length + i] = d; });
