@@ -127,7 +127,7 @@ export class PatientFormService {
   private getChangedFields(original: Partial<Patient>, current: any): string[] {
     const fieldsToCheck = [
       'apellido', 'nombre', 'domicilio', 'localidad', 
-      'telefono', 'fechaNacimiento', 'obraSocial', 'numeroAfiliado'
+      'telefono', 'fechaNacimiento', 'obraSocial', 'numeroAfiliado', 'profesional'
     ];
     
     const labels: { [key: string]: string } = {
@@ -138,7 +138,8 @@ export class PatientFormService {
       telefono: 'teléfono',
       fechaNacimiento: 'cumpleaños',
       obraSocial: 'obra social',
-      numeroAfiliado: 'número de afiliado'
+      numeroAfiliado: 'número de afiliado',
+      profesional: 'profesional'
     };
 
     return fieldsToCheck

@@ -103,3 +103,9 @@
   top: calc(3.0cm + var(--off-y));
   left: calc(14.5cm + var(--off-x));
 }
+
+.profesional-field {
+  top: calc(3.65cm + var(--off-y));
+  left: calc(14.5cm + var(--off-x));
+  font-weight: bold;
+}

@@ -1,4 +1,4 @@
-import { Component, inject, signal, ElementRef, ViewChild } from '@angular/core';
+import { Component, inject, signal, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PatientFormService } from '../../../core/services/patient-form.service';
@@ -67,11 +67,12 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
     }
   `]
 })
-export class StepInsuranceComponent {
+export class StepInsuranceComponent implements OnInit {
   private fb = inject(FormBuilder);
   patientFormService = inject(PatientFormService);
 
   @ViewChild('optionsList') optionsList?: ElementRef;
+  @ViewChild('profOptionsList') profOptionsList?: ElementRef;
 
   obrasSociales = [
     "Particular",
@@ -87,14 +88,53 @@ export class StepInsuranceComponent {
     ].sort()
   ];
 
+  profesionales = [
+    "Kevin Anzoategui",
+    "Beatriz Baleiron",
+    "Martin Chaparro",
+    "Gustavo D'archivio",
+    "Aldana Diaz",
+    "Ana Diaz Pantoja",
+    "Ignacio Faes",
+    "Lucas Garritano",
+    "Agustina Grispino",
+    "Fabian Grispino",
+    "Eliana Lopez",
+    "Julian Nicolini",
+    "Amparo Suter",
+    "Karla Useche"
+  ];
+
   filteredObras = signal<string[]>([...this.obrasSociales]);
   showDropdown = signal(false);
   activeIndex = signal<number>(-1);
 
+  filteredProfesionales = signal<string[]>([...this.profesionales]);
+  showProfDropdown = signal(false);
+  activeProfIndex = signal<number>(-1);
+
   form = this.fb.group({
     obraSocial: [this.patientFormService.formData().obraSocial || '', [Validators.required]],
-    numeroAfiliado: [this.patientFormService.formData().numeroAfiliado || '']
+    numeroAfiliado: [this.patientFormService.formData().numeroAfiliado || ''],
+    profesional: [this.patientFormService.formData().profesional || '', [Validators.required]]
   });
+
+  ngOnInit() {
+    this.form.get('obraSocial')?.valueChanges.subscribe(value => {
+      this.updateAfiliadoValidation(value);
+    });
+    this.updateAfiliadoValidation(this.form.get('obraSocial')?.value);
+  }
+
+  private updateAfiliadoValidation(obraSocialValue: string | null | undefined) {
+    const afiliadoControl = this.form.get('numeroAfiliado');
+    if (obraSocialValue && obraSocialValue !== 'Particular') {
+      afiliadoControl?.setValidators([Validators.required]);
+    } else {
+      afiliadoControl?.clearValidators();
+    }
+    afiliadoControl?.updateValueAndValidity();
+  }
 
   filterObras() {
     const val = this.form.get('obraSocial')?.value?.toLowerCase() || '';
@@ -163,6 +203,80 @@ export class StepInsuranceComponent {
     });
   }
 
+  filterProfesionales() {
+    const val = this.form.get('profesional')?.value?.toLowerCase() || '';
+    const filtered = this.profesionales.filter(p => p.toLowerCase().includes(val));
+    this.filteredProfesionales.set(filtered);
+    this.activeProfIndex.set(-1);
+    if (!this.showProfDropdown()) this.showProfDropdown.set(true);
+  }
+
+  selectProfesional(prof: string) {
+    this.form.patchValue({ profesional: prof });
+    this.showProfDropdown.set(false);
+    this.activeProfIndex.set(-1);
+  }
+
+  clearProfSelection() {
+    this.form.patchValue({ profesional: '' });
+    this.filterProfesionales();
+    this.showProfDropdown.set(true);
+  }
+
+  onProfKeyDown(event: KeyboardEvent) {
+    if (!this.showProfDropdown()) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        this.showProfDropdown.set(true);
+        this.filterProfesionales();
+      }
+      return;
+    }
+
+    const list = this.filteredProfesionales();
+    if (list.length === 0) return;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        this.activeProfIndex.update(i => (i + 1) % list.length);
+        this.scrollProfToActive();
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.activeProfIndex.update(i => (i - 1 + list.length) % list.length);
+        this.scrollProfToActive();
+        break;
+      case 'Enter':
+        if (this.activeProfIndex() >= 0) {
+          event.preventDefault();
+          this.selectProfesional(list[this.activeProfIndex()]);
+        }
+        break;
+      case 'Escape':
+        this.showProfDropdown.set(false);
+        break;
+    }
+  }
+
+  private scrollProfToActive() {
+    setTimeout(() => {
+      const activeEl = this.profOptionsList?.nativeElement.querySelector('.option-item.active');
+      if (activeEl) {
+        activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    });
+  }
+
+  hideDropdown() {
+    // Delay to allow item click to register before dropdown is removed from DOM
+    setTimeout(() => this.showDropdown.set(false), 200);
+  }
+
+  hideProfDropdown() {
+    // Delay to allow item click to register before dropdown is removed from DOM
+    setTimeout(() => this.showProfDropdown.set(false), 200);
+  }
+
   onPrevious() {
     this.patientFormService.previousStep();
   }
@@ -171,14 +285,10 @@ export class StepInsuranceComponent {
     if (this.form.valid) {
       this.patientFormService.updateData({
         obraSocial: this.form.value.obraSocial!,
-        numeroAfiliado: this.form.value.numeroAfiliado || ''
+        numeroAfiliado: this.form.value.numeroAfiliado || '',
+        profesional: this.form.value.profesional || ''
       });
       this.patientFormService.nextStep();
     }
-  }
-
-  hideDropdown() {
-    // Delay to allow item click to register before dropdown is removed from DOM
-    setTimeout(() => this.showDropdown.set(false), 200);
   }
 }

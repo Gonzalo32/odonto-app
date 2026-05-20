@@ -117,8 +117,10 @@ input {
   gap: var(--spacing-sm);
 
   label {
+    font-family: var(--font-family-title);
     font-size: var(--font-size-large);
-    font-weight: 500;
+    font-weight: 700;
+    letter-spacing: 0.03em;
   }
 }
 

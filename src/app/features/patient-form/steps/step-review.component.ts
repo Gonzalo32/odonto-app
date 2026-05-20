@@ -75,6 +75,12 @@ body { margin: 0; padding: 0; }
   top: calc(3.0cm + var(--off-y));
   left: calc(14.5cm + var(--off-x));
 }
+.profesional-field {
+  position: absolute;
+  top: calc(3.65cm + var(--off-y));
+  left: calc(14.5cm + var(--off-x));
+  font-weight: bold;
+}
 `;
 
 @Component({
@@ -111,6 +117,10 @@ body { margin: 0; padding: 0; }
           <div class="summary-item">
             <span class="label">Teléfono:</span>
             <span class="value">{{ patientFormService.formData().telefono || 'No proporcionado' }}</span>
+          </div>
+          <div class="summary-item" *ngIf="patientFormService.formData().profesional">
+            <span class="label">Profesional:</span>
+            <span class="value">{{ patientFormService.formData().profesional }}</span>
           </div>
         </div>
 
@@ -169,9 +179,10 @@ body { margin: 0; padding: 0; }
       gap: 0.15rem;
     }
     .label {
+      font-family: var(--font-family-title);
       font-size: clamp(0.7rem, 1.5vh, 0.9rem);
       color: var(--text-light);
-      font-weight: 500;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }

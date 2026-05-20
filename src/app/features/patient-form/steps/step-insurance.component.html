@@ -48,7 +48,7 @@
     </div>
 
     <div class="form-group" style="margin-top: var(--spacing-md);" *ngIf="form.get('obraSocial')?.value !== 'Particular'">
-      <label for="numeroAfiliado">Número de Afiliado (Opcional)</label>
+      <label for="numeroAfiliado">Número de Afiliado</label>
       <input 
         id="numeroAfiliado" 
         type="text" 
@@ -56,6 +56,55 @@
         autocomplete="off" 
         placeholder="Ej: 123456789"
       >
+      @if (form.controls.numeroAfiliado.invalid && form.controls.numeroAfiliado.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Ingrese su número de afiliado</span>
+      }
+    </div>
+
+    <div class="form-group" style="margin-top: var(--spacing-md);">
+      <label for="profesional">Profesional</label>
+      <div class="autocomplete-container">
+        <div class="input-wrapper">
+          <input 
+            id="profesional" 
+            type="text" 
+            formControlName="profesional" 
+            autocomplete="off" 
+            placeholder="Ej: Dra. Carolina Senza"
+            (input)="filterProfesionales()"
+            (focus)="showProfDropdown.set(true); filterProfesionales()"
+            (blur)="hideProfDropdown()"
+            (keydown)="onProfKeyDown($event)"
+          >
+          <button 
+            type="button" 
+            class="clear-btn" 
+            *ngIf="form.get('profesional')?.value"
+            (click)="clearProfSelection()"
+            title="Borrar selección"
+          >
+            &times;
+          </button>
+        </div>
+        
+        <div class="options-list" *ngIf="showProfDropdown()" #profOptionsList>
+          <div 
+            class="option-item" 
+            *ngFor="let prof of filteredProfesionales(); let i = index" 
+            [class.active]="i === activeProfIndex()"
+            (click)="selectProfesional(prof)"
+          >
+            {{ prof }}
+          </div>
+          <div class="no-results" *ngIf="filteredProfesionales().length === 0">
+            No se encontraron resultados
+          </div>
+        </div>
+      </div>
+
+      @if (form.controls.profesional.invalid && form.controls.profesional.touched) {
+        <span class="error-msg" style="color: var(--error-color);">Seleccione un profesional</span>
+      }
     </div>
 
     <div class="actions">
