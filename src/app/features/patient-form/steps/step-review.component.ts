@@ -77,8 +77,8 @@ body { margin: 0; padding: 0; }
 }
 .profesional-field {
   position: absolute;
-  top: calc(3.65cm + var(--off-y));
-  left: calc(14.5cm + var(--off-x));
+  top: calc(3.9cm + var(--off-y));
+  left: calc(13.6cm + var(--off-x));
   font-weight: bold;
 }
 `;

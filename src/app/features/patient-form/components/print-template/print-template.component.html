@@ -19,5 +19,5 @@
 
   <div class="field edad-field">{{ age() }}</div>
   <div class="field obra-social-field" *ngIf="patient().obraSocial !== 'Particular'">{{ patient().obraSocial }}</div>
-  <div class="field profesional-field" *ngIf="patient().profesional">Prof: {{ patient().profesional }}</div>
+  <div class="field profesional-field" *ngIf="patient().profesional">{{ patient().profesional }}</div>
 </div>
