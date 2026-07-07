@@ -82,3 +82,39 @@ Si al hacer un `git commit` te pide identificarte, ejecuta estos comandos en la 
     ```powershell
     git config --global user.email "tu-email-de-github@ejemplo.com"
     ```
+
+---
+
+## 🔄 Flujo para Actualizar Cambios desde GitHub (Actualizar PC del Consultorio)
+Cuando trabajes en otra computadora, subas tus cambios a GitHub y quieras aplicarlos en la PC del Consultorio (Tótem), debes realizar los siguientes pasos en la PC del consultorio:
+
+### 1. Descargar los últimos cambios
+Abre una terminal en la raíz del proyecto (`c:\Users\USUARIO\Documents\odonto-app`) y descarga el código:
+```powershell
+git pull origin main
+```
+
+### 2. Instalar nuevas librerías (Solo si agregaste alguna dependencia nueva)
+*   **En la raíz:**
+    ```powershell
+    npm install
+    ```
+*   **En la carpeta server (si agregaste algo al backend):**
+    ```powershell
+    cd server
+    npm install
+    cd ..
+    ```
+
+### 3. Compilar los cambios visuales
+*(En la raíz del proyecto)*
+```powershell
+npm run build
+```
+
+### 4. Reiniciar el Tótem
+Ejecuta el script de inicio para que cierre los procesos anteriores y levante todo de manera limpia y automática con los nuevos cambios:
+```powershell
+.\iniciar-totem.bat
+```
+
