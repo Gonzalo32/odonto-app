@@ -104,8 +104,16 @@
   left: calc(14.5cm + var(--off-x));
 }
 
-.profesional-field {
+ .profesional-field {
   top: calc(3.65cm + var(--off-y));
   left: calc(14.5cm + var(--off-x));
   font-weight: bold;
+}
+
+.matricula-field {
+  position: absolute;
+  top: calc(4.30cm + var(--off-y)); /* same vertical gap as obra-social to profesional */
+  left: calc(16.6cm + var(--off-x)); /* align with telephone number */
+  font-weight: normal;
+  z-index: 10;
 }

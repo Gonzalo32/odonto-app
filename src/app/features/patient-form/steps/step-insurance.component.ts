@@ -35,6 +35,17 @@ import { PatientFormService } from '../../../core/services/patient-form.service'
     .clear-btn:hover {
       color: var(--error-color);
     }
+    .profesional-field {
+  top: calc(3.65cm + var(--off-y));
+  left: calc(14.5cm + var(--off-x));
+  font-weight: bold;
+}
+
+.matricula-field {
+  top: calc(4.30cm + var(--off-y)); /* same vertical gap as obra-social to profesional */
+  left: calc(14.5cm + var(--off-x));
+  font-weight: normal;
+}
     .options-list {
       position: absolute;
       top: 100%;
@@ -88,7 +99,9 @@ export class StepInsuranceComponent implements OnInit {
     ].sort()
   ];
 
+  // Blank option allows no professional selection
   profesionales = [
+    "",
     "Kevin Anzoategui",
     "Beatriz Baleiron",
     "Martin Chaparro",
@@ -105,6 +118,25 @@ export class StepInsuranceComponent implements OnInit {
     "Karla Useche"
   ];
 
+  // Mapping of professional name to registration number (matrícula)
+  profesionalMatricula: Record<string, number> = {
+    "Beatriz Baleiron": 1789,
+    "Kevin Anzoategui": 2198,
+    "Eliana Lopez": 2039,
+    "Lucas Garritano": 2164,
+    "Julian Nicolini": 2046,
+    "Amparo Suter": 2173,
+    "Fabian Grispino": 665,
+    "Gustavo D'archivio": 680,
+    "Karla Useche": 2193,
+    "Agustina Grispino": 2125,
+    "Martin Chaparro": 2182
+  };
+
+  // Signal that holds the currently selected matrícula
+  selectedMatricula = signal<number | null>(null);
+
+
   filteredObras = signal<string[]>([...this.obrasSociales]);
   showDropdown = signal(false);
   activeIndex = signal<number>(-1);
@@ -116,14 +148,29 @@ export class StepInsuranceComponent implements OnInit {
   form = this.fb.group({
     obraSocial: [this.patientFormService.formData().obraSocial || '', [Validators.required]],
     numeroAfiliado: [this.patientFormService.formData().numeroAfiliado || ''],
-    profesional: [this.patientFormService.formData().profesional || '', [Validators.required]]
+    // Professional is optional; blank selection allowed
+    profesional: [this.patientFormService.formData().profesional || '']
   });
 
   ngOnInit() {
+    // Initialize selected matricula if a professional is pre‑filled
+    const initialProf = this.form.get('profesional')?.value;
+    if (initialProf && this.profesionalMatricula[initialProf]) {
+      this.selectedMatricula.set(this.profesionalMatricula[initialProf]);
+    }
+
     this.form.get('obraSocial')?.valueChanges.subscribe(value => {
       this.updateAfiliadoValidation(value);
     });
-    this.updateAfiliadoValidation(this.form.get('obraSocial')?.value);
+    // Sync matricula whenever the professional field changes (including when loading a patient)
+    this.form.get('profesional')?.valueChanges.subscribe(prof => {
+      const mat = prof ? this.profesionalMatricula[prof] ?? null : null;
+      this.selectedMatricula.set(mat ? Number(mat) : null);
+      this.patientFormService.formData.update(fd => ({
+        ...fd,
+        matricula: mat?.toString() ?? ''
+      }));
+    });
   }
 
   private updateAfiliadoValidation(obraSocialValue: string | null | undefined) {
@@ -213,12 +260,25 @@ export class StepInsuranceComponent implements OnInit {
 
   selectProfesional(prof: string) {
     this.form.patchValue({ profesional: prof });
+    const mat = this.profesionalMatricula[prof] ?? null;
+    this.selectedMatricula.set(mat);
+    // store matricula in shared form data for printing
+    this.patientFormService.formData.update(fd => ({
+      ...fd,
+      matricula: mat?.toString() ?? ''
+    }));
     this.showProfDropdown.set(false);
     this.activeProfIndex.set(-1);
   }
 
   clearProfSelection() {
     this.form.patchValue({ profesional: '' });
+    this.selectedMatricula.set(null);
+    // clear matricula in shared data
+    this.patientFormService.formData.update(fd => ({
+      ...fd,
+      matricula: ''
+    }));
     this.filterProfesionales();
     this.showProfDropdown.set(true);
   }

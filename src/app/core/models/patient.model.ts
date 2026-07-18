@@ -12,7 +12,9 @@ export interface Patient {
   obraSocial?: string;
   numeroAfiliado?: string;
   profesional?: string;
+  matricula?: string; // added field for registration number
   observacion?: string[][];
   creadoEn?: string | Date;
   actualizadoEn?: string | Date;
 }
+
