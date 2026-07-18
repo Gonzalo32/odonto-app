@@ -31,10 +31,22 @@ export class PrintTemplateComponent {
 
   afiliadoDigits = computed(() => {
     const num = (this.patient().numeroAfiliado || '').trim().toUpperCase();
-    const digits = num.split('').slice(-15);
-    const padded = new Array(15).fill('');
-    digits.forEach((d, i) => { padded[15 - digits.length + i] = d; });
-    return padded;
+    const digits = num.split('');
+    if (digits.length <= 15) {
+      const padded = new Array(15).fill('');
+      digits.forEach((d, i) => { padded[15 - digits.length + i] = d; });
+      return padded;
+    }
+    return digits; // more than 15 characters, show all (will shrink via CSS)
+  });
+
+  // Scale the affiliate block so that >15 characters fit within the fixed 5.2 cm width
+  afiliadoScale = computed(() => {
+    const raw = (this.patient().numeroAfiliado || '').trim();
+    const len = raw.length;
+    if (len <= 15) return 1;
+    // Reduce horizontal size proportionally so that the block occupies the same start‑end positions as 15 chars
+    return 15 / len;
   });
 
   formattedBirthDate = computed(() => {

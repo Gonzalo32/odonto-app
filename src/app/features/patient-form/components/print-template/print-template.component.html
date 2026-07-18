@@ -1,7 +1,7 @@
 <div class="print-container" id="print-data">
   <div class="field name-field">{{ fullName() }}</div>
 
-  <div class="afiliado-container">
+  <div class="afiliado-container" [style.transform]="'scaleX(' + afiliadoScale() + ')'" [style.transform-origin]="'left'">
     <span class="digit" *ngFor="let d of afiliadoDigits()">{{ d }}</span>
   </div>
 
