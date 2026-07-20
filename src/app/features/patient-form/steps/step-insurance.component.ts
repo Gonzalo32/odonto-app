@@ -101,7 +101,8 @@ export class StepInsuranceComponent implements OnInit {
 
   // Blank option allows no professional selection
   profesionales = [
-    "",
+    "", // empty for no selection
+    "", // placeholder shown in dropdown
     "Kevin Anzoategui",
     "Beatriz Baleiron",
     "Martin Chaparro",
@@ -130,7 +131,10 @@ export class StepInsuranceComponent implements OnInit {
     "Gustavo D'archivio": 680,
     "Karla Useche": 2193,
     "Agustina Grispino": 2125,
-    "Martin Chaparro": 2182
+    "Martin Chaparro": 2182,
+    "Ignacio Faes": 2106,
+    "Aldana Diaz": 2112,
+    "Ana Diaz": 3590
   };
 
   // Signal that holds the currently selected matrícula
