@@ -19,6 +19,8 @@
 
   <div class="field edad-field">{{ age() }}</div>
   <div class="field obra-social-field" *ngIf="patient().obraSocial !== 'Particular'">{{ patient().obraSocial }}</div>
+  <!-- Matricula derived from profesionalMatricula mapping -->
   <div class="field profesional-field" *ngIf="patient().profesional">{{ patient().profesional }}</div>
-  <div class="field matricula-field">{{ patient().matricula }}</div>
+  <div class="field matricula-field">{{ matricula() || '(sin matrícula - prof: ' + (patient().profesional || 'vacío') + ')' }}</div>
+  <div class="field ciudad-field">Cipolletti</div>
 </div>

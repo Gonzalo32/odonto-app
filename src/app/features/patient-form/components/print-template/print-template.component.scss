@@ -112,8 +112,14 @@
 
 .matricula-field {
   position: absolute;
-  top: calc(4.30cm + var(--off-y)); /* same vertical gap as obra-social to profesional */
-  left: calc(16.6cm + var(--off-x)); /* align with telephone number */
+  top: calc(4.65cm + var(--off-y));
+  left: calc(16.6cm + var(--off-x));
   font-weight: normal;
-  z-index: 10;
+}
+
+.ciudad-field {
+  position: absolute;
+  top: calc(5.65cm + var(--off-y));  /* 1cm debajo de matrícula */
+  left: calc(16cm + var(--off-x)); /* mismo left que matrícula */
+  font-weight: normal;
 }
