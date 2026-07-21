@@ -72,18 +72,18 @@ body { margin: 0; padding: 0; }
   left: calc(11.8cm + var(--off-x));
 }
 .obra-social-field {
-  top: calc(3.0cm + var(--off-y));
+  top: calc(2.92cm + var(--off-y));
   left: calc(14.5cm + var(--off-x));
 }
 .profesional-field {
   position: absolute;
-  top: calc(3.8cm + var(--off-y));
+  top: calc(3.75cm + var(--off-y));
   left: calc(13.6cm + var(--off-x));
   font-weight: bold;
 }
 .matricula-field {
   position: absolute;
-  top: calc(4.47cm + var(--off-y));
+  top: calc(4.44cm + var(--off-y));
   left: calc(18cm + var(--off-x));
   font-weight: normal;
 }
