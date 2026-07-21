@@ -83,13 +83,13 @@ body { margin: 0; padding: 0; }
 }
 .matricula-field {
   position: absolute;
-  top: calc(4.65cm + var(--off-y));
+  top: calc(4.60cm + var(--off-y));
   left: calc(18cm + var(--off-x));
   font-weight: normal;
 }
 .ciudad-field {
   position: absolute;
-  top: calc(5.65cm + var(--off-y));  /* 1cm debajo de matrícula */
+  top: calc(5.15cm + var(--off-y));  /* 1cm debajo de matrícula */
   left: calc(15.6cm + var(--off-x));   /* mismo left que matrícula */
   font-weight: normal;
 }
