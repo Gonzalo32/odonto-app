@@ -77,13 +77,13 @@ body { margin: 0; padding: 0; }
 }
 .profesional-field {
   position: absolute;
-  top: calc(3.9cm + var(--off-y));
+  top: calc(3.88cm + var(--off-y));
   left: calc(13.6cm + var(--off-x));
   font-weight: bold;
 }
 .matricula-field {
   position: absolute;
-  top: calc(4.60cm + var(--off-y));
+  top: calc(4.50cm + var(--off-y));
   left: calc(18cm + var(--off-x));
   font-weight: normal;
 }
