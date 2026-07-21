@@ -71,7 +71,7 @@ export class PrintTemplateComponent {
     'Martin Chaparro': 2182,
     'Ignacio Faes': 2106,
     'Aldana Diaz': 2112,
-    'Ana Diaz': 3590,
+    'Ana Diaz Pantoja': 3590,
   };
 
   /** Matrícula derivada del nombre del profesional; funciona siempre, aunque el paciente venga de la BD */
