@@ -25,8 +25,8 @@ export class StepAddressComponent {
   onSubmit() {
     if (this.form.valid) {
       this.patientFormService.updateData({
-        localidad: this.form.value.localidad!,
-        domicilio: this.form.value.domicilio!
+        localidad: this.form.value.localidad!.toUpperCase(),
+        domicilio: this.form.value.domicilio!.toUpperCase()
       });
       this.patientFormService.nextStep();
     }

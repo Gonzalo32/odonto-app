@@ -15,6 +15,7 @@ body { margin: 0; padding: 0; }
   font-family: 'Courier New', Courier, monospace;
   font-size: 11pt;
   color: #000;
+  text-transform: uppercase;
 }
 .field {
   position: absolute;
@@ -203,6 +204,7 @@ body { margin: 0; padding: 0; }
       color: var(--text-color);
       font-weight: 600;
       line-height: 1.2;
+      text-transform: uppercase;
     }
     .actions {
       display: flex;

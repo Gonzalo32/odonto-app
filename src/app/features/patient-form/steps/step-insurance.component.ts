@@ -348,8 +348,8 @@ export class StepInsuranceComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       this.patientFormService.updateData({
-        obraSocial: this.form.value.obraSocial!,
-        numeroAfiliado: this.form.value.numeroAfiliado || '',
+        obraSocial: this.form.value.obraSocial!.toUpperCase(),
+        numeroAfiliado: (this.form.value.numeroAfiliado || '').toUpperCase(),
         profesional: this.form.value.profesional || ''
       });
       this.patientFormService.nextStep();

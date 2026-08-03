@@ -52,6 +52,14 @@ input {
   }
 }
 
+input[type="text"] {
+  text-transform: uppercase;
+
+  &::placeholder {
+    text-transform: none;
+  }
+}
+
 .btn-primary {
   width: 100%;
   padding: var(--spacing-md);

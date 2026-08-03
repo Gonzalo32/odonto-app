@@ -25,8 +25,8 @@ export class StepPersonalComponent {
   onSubmit() {
     if (this.form.valid) {
       this.patientFormService.updateData({
-        apellido: this.form.value.apellido!,
-        nombre: this.form.value.nombre!
+        apellido: this.form.value.apellido!.toUpperCase(),
+        nombre: this.form.value.nombre!.toUpperCase()
       });
       this.patientFormService.nextStep();
     }
