@@ -2,11 +2,12 @@ import { Component, inject, signal, ElementRef, ViewChild, OnInit } from '@angul
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PatientFormService } from '../../../core/services/patient-form.service';
+import { CancelButtonComponent } from '../../../shared/components/cancel-button/cancel-button.component';
 
 @Component({
   selector: 'app-step-insurance',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, CancelButtonComponent],
   templateUrl: './step-insurance.component.html',
   styles: [`
     .autocomplete-container {

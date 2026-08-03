@@ -94,7 +94,9 @@ input[type="text"] {
   }
 }
 
+
 .step-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PatientFormService } from '../../../core/services/patient-form.service';
+import { CancelButtonComponent } from '../../../shared/components/cancel-button/cancel-button.component';
 
 const PRINT_CSS = `
 @page { size: A4 landscape; margin: 0; }
@@ -99,7 +100,7 @@ body { margin: 0; padding: 0; }
 @Component({
   selector: 'app-step-review',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CancelButtonComponent],
   template: `
     <div *ngIf="imprimiendo" style="
       position:fixed;top:0;left:0;width:100vw;height:100vh;
@@ -164,6 +165,7 @@ body { margin: 0; padding: 0; }
       <div class="actions">
         <button type="button" class="btn-secondary" (click)="onModificar()">Modificar</button>
         <button type="button" class="btn-primary" (click)="onConfirm()">Aceptar</button>
+        <app-cancel-button></app-cancel-button>
       </div>
     </div>
   `,
