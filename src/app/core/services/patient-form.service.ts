@@ -17,6 +17,8 @@ export class PatientFormService {
   isLastStep = computed(() => this.currentStep() === this.totalSteps());
   isOffline = signal<boolean>(false);
   isEditing = signal<boolean>(false);
+  isExistingPatient = signal<boolean>(false);
+  quickEditMode = signal<boolean>(false);
   private originalData = signal<Partial<Patient>>({});
 
   constructor() {
@@ -51,6 +53,7 @@ export class PatientFormService {
       const data = { ...localMatch, fechaNacimiento: this.toHtmlDateInput(localMatch.fechaNacimiento) };
       this.formData.set(data);
       this.originalData.set(JSON.parse(JSON.stringify(data)));
+      this.isExistingPatient.set(true);
       return true;
     }
 
@@ -67,6 +70,7 @@ export class PatientFormService {
         this.formData.set(data);
         this.originalData.set(JSON.parse(JSON.stringify(data)));
         this.isOffline.set(false);
+        this.isExistingPatient.set(true);
         return true;
       }
       return false;
@@ -261,5 +265,7 @@ export class PatientFormService {
     this.currentStep.set(1);
     this.formData.set({});
     this.isEditing.set(false);
+    this.isExistingPatient.set(false);
+    this.quickEditMode.set(false);
   }
 }

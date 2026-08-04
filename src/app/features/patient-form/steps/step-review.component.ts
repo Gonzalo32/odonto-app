@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { PatientFormService } from '../../../core/services/patient-form.service';
 import { CancelButtonComponent } from '../../../shared/components/cancel-button/cancel-button.component';
 
@@ -100,7 +101,7 @@ body { margin: 0; padding: 0; }
 @Component({
   selector: 'app-step-review',
   standalone: true,
-  imports: [CommonModule, CancelButtonComponent],
+  imports: [CommonModule, CancelButtonComponent, FormsModule],
   template: `
     <div *ngIf="imprimiendo" style="
       position:fixed;top:0;left:0;width:100vw;height:100vh;
@@ -109,6 +110,41 @@ body { margin: 0; padding: 0; }
       <div style="width:60px;height:60px;border:6px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
       <p style="color:#fff;font-size:2rem;font-family:sans-serif;">Imprimiendo...</p>
       <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+    </div>
+
+    <!-- POPUP CAMBIAR PROFESIONAL -->
+    <div class="modal-backdrop" *ngIf="showProfModal" (click)="cerrarModal()">
+      <div class="modal-card" (click)="$event.stopPropagation()">
+        <h3 class="modal-title">Seleccionar Profesional</h3>
+
+        <input
+          class="modal-search"
+          type="text"
+          placeholder="Buscar profesional..."
+          [(ngModel)]="profSearch"
+          (ngModelChange)="filtrarProfesionales($event)"
+          autocomplete="off"
+        >
+
+        <div class="prof-list">
+          <div
+            class="prof-item"
+            *ngFor="let prof of profesionalesFiltrados"
+            [class.selected]="prof === profSeleccionado"
+            (click)="seleccionarProfesional(prof)"
+          >
+            {{ prof }}
+          </div>
+          <div class="no-results" *ngIf="profesionalesFiltrados.length === 0">
+            Sin resultados
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button class="btn-primary" [disabled]="!profSeleccionado" (click)="confirmarProfesional()">Confirmar</button>
+        </div>
+      </div>
     </div>
 
     <div class="step-wrapper">
@@ -165,11 +201,95 @@ body { margin: 0; padding: 0; }
       <div class="actions">
         <button type="button" class="btn-secondary" (click)="onModificar()">Modificar</button>
         <button type="button" class="btn-primary" (click)="onConfirm()">Aceptar</button>
+        <button
+          *ngIf="patientFormService.isExistingPatient()"
+          type="button"
+          class="btn-prof"
+          (click)="onCambiarProfesional()">
+          Cambiar Profesional
+        </button>
         <app-cancel-button></app-cancel-button>
       </div>
     </div>
   `,
   styles: [`
+    /* ── Modal ─────────────────────────────────── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.18s ease;
+    }
+    .modal-card {
+      background: var(--bg-color);
+      border-radius: var(--border-radius-large);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      padding: var(--spacing-lg);
+      width: min(500px, 90vw);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+      animation: slideUp 0.22s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .modal-title {
+      font-family: var(--font-family-title);
+      font-size: clamp(1.2rem, 3vh, 1.8rem);
+      color: var(--primary-color);
+      text-align: center;
+      margin: 0;
+    }
+    .modal-search {
+      width: 100%;
+      padding: var(--spacing-md);
+      font-size: var(--font-size-base);
+      border: 2px solid var(--border-color);
+      border-radius: var(--border-radius-base);
+      outline: none;
+      background: var(--bg-color);
+      color: var(--text-color);
+      text-transform: uppercase;
+      &:focus { border-color: var(--primary-color); }
+      &::placeholder { text-transform: none; }
+    }
+    .prof-list {
+      max-height: clamp(180px, 30vh, 320px);
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-base);
+      &::-webkit-scrollbar { width: 6px; }
+      &::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
+    }
+    .prof-item {
+      padding: clamp(10px, 1.5vh, 18px) var(--spacing-md);
+      cursor: pointer;
+      font-size: var(--font-size-base);
+      color: var(--text-color);
+      transition: background 0.15s;
+      text-transform: uppercase;
+      &:hover { background: var(--primary-light); color: var(--primary-color); }
+      &.selected {
+        background: var(--primary-color);
+        color: white;
+        font-weight: 600;
+      }
+    }
+    .no-results {
+      padding: var(--spacing-md);
+      color: var(--text-light);
+      font-style: italic;
+      text-align: center;
+    }
+    .modal-actions {
+      display: flex;
+      gap: var(--spacing-md);
+      button { flex: 1; }
+    }
+
+    /* ── Summary ────────────────────────────────── */
     .summary-container {
       display: flex;
       flex-direction: row;
@@ -215,12 +335,89 @@ body { margin: 0; padding: 0; }
       width: 100%;
       button { flex: 1; }
     }
+    .btn-prof {
+      flex: 1;
+      width: 100%;
+      padding: var(--spacing-md);
+      font-size: var(--font-size-large);
+      font-weight: 600;
+      background-color: transparent;
+      color: var(--secondary-color);
+      border: 2px solid var(--secondary-color);
+      border-radius: var(--border-radius-base);
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      &:hover { background-color: rgba(157, 77, 138, 0.08); }
+      &:active { transform: scale(0.98); }
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)    scale(1);    }
+    }
   `]
 })
 export class StepReviewComponent {
   patientFormService = inject(PatientFormService);
   imprimiendo = false;
 
+  /* ── Modal state ─────────────────────────────── */
+  showProfModal = false;
+  profSearch = '';
+  profSeleccionado = '';
+
+  readonly profesionales = [
+    "Kevin Anzoategui", "Beatriz Baleiron", "Martin Chaparro",
+    "Gustavo D'archivio", "Aldana Diaz", "Ana Diaz Pantoja",
+    "Ignacio Faes", "Lucas Garritano", "Agustina Grispino",
+    "Fabian Grispino", "Eliana Lopez", "Julian Nicolini",
+    "Amparo Suter", "Karla Useche"
+  ];
+
+  readonly profesionalMatricula: Record<string, number> = {
+    "Beatriz Baleiron": 1789, "Kevin Anzoategui": 2198,
+    "Eliana Lopez": 2039,    "Lucas Garritano": 2164,
+    "Julian Nicolini": 2046, "Amparo Suter": 2173,
+    "Fabian Grispino": 665,  "Gustavo D'archivio": 680,
+    "Karla Useche": 2193,    "Agustina Grispino": 2125,
+    "Martin Chaparro": 2182, "Ignacio Faes": 2106,
+    "Aldana Diaz": 2112,     "Ana Diaz Pantoja": 3590
+  };
+
+  profesionalesFiltrados: string[] = [...this.profesionales];
+
+  onCambiarProfesional() {
+    this.profSearch = '';
+    this.profSeleccionado = this.patientFormService.formData().profesional || '';
+    this.profesionalesFiltrados = [...this.profesionales];
+    this.showProfModal = true;
+  }
+
+  filtrarProfesionales(query: string) {
+    const q = query.toLowerCase();
+    this.profesionalesFiltrados = this.profesionales.filter(p => p.toLowerCase().includes(q));
+  }
+
+  seleccionarProfesional(prof: string) {
+    this.profSeleccionado = prof;
+  }
+
+  confirmarProfesional() {
+    if (!this.profSeleccionado) return;
+    const matricula = this.profesionalMatricula[this.profSeleccionado] ?? null;
+    this.patientFormService.updateData({
+      profesional: this.profSeleccionado,
+      ...(matricula !== null ? { matricula: String(matricula) } : {})
+    });
+    this.showProfModal = false;
+  }
+
+  cerrarModal() {
+    this.showProfModal = false;
+  }
+
+  /* ── Review actions ──────────────────────────── */
   onModificar() {
     this.patientFormService.isEditing.set(true);
     this.patientFormService.currentStep.set(1);
@@ -276,3 +473,4 @@ export class StepReviewComponent {
     return this.patientFormService.toDdMmAaaa(dateStr) || 'No proporcionada';
   }
 }
+
